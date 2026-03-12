@@ -24,7 +24,7 @@ class Product(models.Model):
     manufacter = models.ForeignKey(Manufacter, on_delete = models.CASCADE, related_name="manufacter")
     name = models.CharField(max_length=200)
     decription = models.TextField()
-    photo = models.ImageField()
+    photo = models.ImageField(upload_to='products/%Y/%m/%d/', blank=True,)
     price = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinLengthValidator])
     amount = models.IntegerField(validators=[MinLengthValidator])
 

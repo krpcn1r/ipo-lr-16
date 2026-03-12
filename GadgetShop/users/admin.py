@@ -7,6 +7,7 @@ from users.models import *
 class CartInLine(admin.StackedInline):
     model = Cart
     can_delete = False
+    extra = 0
     verbose_name_plural = "Корзина"
 
 class CustomUserAdmin(UserAdmin):
