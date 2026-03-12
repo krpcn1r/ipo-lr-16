@@ -62,7 +62,7 @@ def add_to_cart(request, product_id):
     cart_item, created = CartItem.objects.get_or_create(user=request.user, product=product)
 
     if not created:
-        cart_item.amount_cart += 1
+        cart_item.quantity += 1
         cart_item.save()
     
     return redirect("catalog")

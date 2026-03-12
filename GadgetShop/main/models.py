@@ -45,17 +45,17 @@ class Cart(models.Model):
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name="cart")
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="product")
-    amount_cart = models.PositiveIntegerField()
+    quantity = models.PositiveIntegerField()
 
     def __str__(self):
-        return f"{self.product.__str__} ({self.amount_cart} шт.)"
+        return f"{self.product.__str__} ({self.quantity} шт.)"
     
     @property
     def item_cost(self):
-        return self.product.price + self.amount_cart
+        return self.product.price + self.quantity
     
     def clean(self):
-        if(self.amount_cart > self.product.amount):
+        if(self.quantity > self.product.amount):
             raise ValidationError("Недостаточно товара")
         
     def start_check(self, *args, **kwargs):
