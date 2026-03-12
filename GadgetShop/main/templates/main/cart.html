@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Моя корзина</title>
+    <style>
+        .cart-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .cart-table th, .cart-table td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        .cart-table th { background-color: #f8f9fa; }
+        .total-block { margin-top: 20px; text-align: right; font-size: 1.2em; font-weight: bold; }
+        .btn-checkout { background: #28a745; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; }
+    </style>
+</head>
+<body>
+
+    <h1>Ваша корзина</h1>
+
+    {% if cart_items %}
+        <table class="cart-table">
+            <thead>
+                <tr>
+                    <th>Товар</th>
+                    <th>Производитель</th>
+                    <th>Количество</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart_items %}
+                <tr>
+                    <td><strong>{{ item.product.name }}</strong></td>
+                    <td>{{ item.product.manufacter.name }}</td>
+                    <td>{{ item.amount_cart }} шт.</td>
+                    <td>
+                        <a href="{% url 'main:add_to_cart' item.product.id %}">+ Добавить еще</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="total-block">
+            <a href="{% url 'main:product_list' %}" style="float: left;">← Продолжить покупки</a>
+            <a href="#" class="btn-checkout">Оформить заказ</a>
+        </div>
+    {% else %}
+        <p>Ваша корзина пока пуста. <a href="{% url 'main:product_list' %}">Перейти в каталог</a></p>
+    {% endif %}
+
+</body>
+</html>

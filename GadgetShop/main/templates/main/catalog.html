@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Каталог товаров</title>
+    <style>
+        .filters { margin-bottom: 20px; padding: 15px; background: #f4f4f4; display: flex; gap: 10px; align-items: flex-end; border-radius: 8px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        tr:hover { background-color: #f9f9f9; }
+        .btn-add { background: #28a745; color: white; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-size: 0.9em; }
+        .btn-add:hover { background: #218838; }
+        .product-link { color: #007bff; text-decoration: none; font-weight: bold; }
+        .product-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <h1>Каталог товаров</h1>
+
+    <form method="get" class="filters">
+        <div>
+            <label>Поиск:</label><br>
+            <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Название или описание...">
+        </div>
+
+        <div>
+            <label>Категория:</label><br>
+            <select name="category">
+                <option value="">Все категории</option>
+                {% for cat in categories %}
+                    <option value="{{ cat.id }}" {% if request.GET.category == cat.id|stringformat:"i" %}selected{% endif %}>
+                        {{ cat.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label>Производитель:</label><br>
+            <select name="manufacter">
+                <option value="">Все производители</option>
+                {% for man in manufacter %}
+                    <option value="{{ man.id }}" {% if request.GET.manufacter == man.id|stringformat:"i" %}selected{% endif %}>
+                        {{ man.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <button type="submit">Применить</button>
+        <a href="{% url 'main:product_list' %}">Сбросить</a>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Наименование</th>
+                <th>Категория</th>
+                <th>Производитель</th>
+                <th>Описание</th>
+                <th>Действие</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.id }}</td>
+                <td>
+                    <!-- Ссылка на страницу товара -->
+                    <a href="{% url 'main:product_detail' product.id %}" class="product-link">
+                        {{ product.name }}
+                    </a>
+                </td>
+                <td>{{ product.category.name }}</td>
+                <td>{{ product.manufacter.name }}</td>
+                <td>{{ product.description|truncatewords:10 }}</td>
+                <td>
+                    <!-- Кнопка добавления в корзину -->
+                    <a href="{% url 'main:add_to_cart' product.id %}" class="btn-add">
+                        🛒 В корзину
+                    </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" style="text-align: center;">Товары не найдены.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>
