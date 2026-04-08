@@ -52,7 +52,7 @@ class CartItem(models.Model):
     
     @property
     def item_cost(self):
-        return self.product.price + self.quantity
+        return self.product.price * self.quantity
     
     def clean(self):
         if(self.quantity > self.product.amount):
