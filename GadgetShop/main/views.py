@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.db.models import Q, Sum, F
 from .models import *
 from django.contrib.auth.decorators import login_required
@@ -32,13 +32,22 @@ def product_list(request):
     if manufacter_id:
         items = items.filter(manufacter_id=manufacter_id)
 
+    # Добавляем логику подсчета товаров в корзине
+    cart_count = 0
+    if request.user.is_authenticated:
+        # Получаем все элементы корзины текущего пользователя
+        cart_items = CartItem.objects.filter(cart__user=request.user)
+        # Суммируем их количество
+        cart_count = sum(item.quantity for item in cart_items)
+
     context = {
         'products': items,
         'categories': category,
         'manufacter': manufacter,
+        'cart_count': cart_count, # Передаем счетчик в HTML
     }
 
-    return render(request, "shop/product_list.html", context)
+    return render(request, "shop/product_list.html", context)   
 
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
@@ -73,6 +82,10 @@ def cart_view(request):
         'total_price': total_price
     })
 
+from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponse, JsonResponse # <-- Добавлен JsonResponse
+# ... ваши остальные импорты ...
+
 @login_required
 def add_to_cart(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
@@ -89,5 +102,14 @@ def add_to_cart(request, product_id):
         if cart_item.quantity < product.amount:
             cart_item.quantity += 1
             cart_item.save()
+            
+    # НОВЫЙ КОД: Проверяем, пришел ли фоновый запрос (AJAX)
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        # Считаем актуальное количество
+        cart_items = CartItem.objects.filter(cart__user=request.user)
+        cart_count = sum(item.quantity for item in cart_items)
+        # Возвращаем JSON с новым числом
+        return JsonResponse({'cart_count': cart_count})
     
+    # Старый код для обычных запросов
     return redirect("main:cart_view")
