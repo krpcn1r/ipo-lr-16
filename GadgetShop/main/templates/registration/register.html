@@ -1,0 +1,22 @@
+{% extends "main/base.html" %}
+
+{% block title %}Регистрация | GadgetShop{% endblock %}
+
+{% block body_class %}body-auth{% endblock %}
+
+{% block content %}
+    <div class="auth-card">
+        <h2>Создать аккаунт</h2>
+
+        <form method="post" action="">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary btn-submit">Зарегистрироваться</button>
+        </form>
+
+        <div class="auth-links">
+            <a href="{% url 'main:login' %}">Уже есть аккаунт? Войти</a><br>
+            <a href="{% url 'main:home' %}">← На главную</a>
+        </div>
+    </div>
+{% endblock %}

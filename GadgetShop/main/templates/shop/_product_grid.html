@@ -1,0 +1,37 @@
+{% if products %}
+    {% regroup products by category as category_list %}
+
+    {% for category_group in category_list %}
+        <div class="category-group-header" style="grid-column: 1 / -1; flex-basis: 100%; width: 100%; margin: 2rem 0 1rem;">
+            <h2>{{ category_group.grouper.name }}</h2>
+        </div>
+
+        {% for product in category_group.list %}
+            <article class="catalog-card">
+                <h3 class="product-title">
+                    <a href="{% url 'main:product_detail' product.id %}">{{ product.name }}</a>
+                </h3>
+                
+                <p class="product-info"><strong>Категория:</strong> {{ product.category.name }}</p>
+                <p class="product-info"><strong>Производитель:</strong> {{ product.manufacter.name }}</p>
+                
+                <div class="product-price">{{ product.price }} руб.</div>
+
+                {% if user.is_authenticated %}
+                    <a href="{% url 'main:add_to_cart' product.id %}" class="btn btn-primary btn-block btn-add btn-ajax-add">
+                        В корзину
+                    </a>
+                {% else %}
+                    <p class="login-prompt">
+                        Для покупки необходимо <a href="{% url 'main:login' %}">войти</a>
+                    </p>
+                {% endif %}
+            </article>
+        {% endfor %}
+        
+    {% endfor %}
+{% else %}
+    <div class="empty-state" style="grid-column: 1 / -1; width: 100%; text-align: center;">
+        Товары не найдены.
+    </div>
+{% endif %}

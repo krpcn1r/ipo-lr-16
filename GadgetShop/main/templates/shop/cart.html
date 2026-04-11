@@ -1,169 +1,14 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Ваша корзина</title>
-    <style>
-        /* Базовые стили страницы */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f8f9fa;
-            color: #333;
-            margin: 0;
-            padding: 40px 20px;
-        }
+{% extends "main/base.html" %}
 
-        /* Главный контейнер (карточка) */
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background-color: #ffffff;
-            padding: 30px 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-        }
+{% block title %}Корзина | GadgetShop{% endblock %}
 
-        h1 {
-            color: #2c3e50;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 15px;
-            margin-top: 0;
-        }
-
-        /* Таблица */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        
-        th, td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid #e9ecef;
-        }
-
-        th {
-            background-color: #f1f3f5;
-            color: #495057;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.85em;
-            letter-spacing: 0.5px;
-        }
-
-        td {
-            vertical-align: middle;
-        }
-
-        /* Ссылки на товары */
-        td a {
-            color: #0d6efd;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s ease;
-        }
-
-        td a:hover {
-            color: #0a58ca;
-            text-decoration: underline;
-        }
-
-        /* Элементы форм */
-        input[type="number"] {
-            padding: 8px;
-            border: 1px solid #ced4da;
-            border-radius: 5px;
-            text-align: center;
-            font-size: 1em;
-            transition: border-color 0.2s;
-        }
-
-        input[type="number"]:focus {
-            outline: none;
-            border-color: #80bdff;
-            box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
-        }
-
-        /* Кнопки */
-        button {
-            font-family: inherit;
-            font-size: 0.9em;
-            transition: all 0.2s ease;
-        }
-
-        .btn-update {
-            background-color: #0d6efd;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            cursor: pointer;
-            border-radius: 5px;
-            font-weight: 500;
-        }
-
-        .btn-update:hover {
-            background-color: #0b5ed7;
-            box-shadow: 0 2px 4px rgba(13, 110, 253, 0.3);
-        }
-
-        .btn-remove {
-            background-color: #fff;
-            color: #dc3545;
-            border: 1px solid #dc3545;
-            padding: 6px 12px;
-            cursor: pointer;
-            border-radius: 5px;
-            font-weight: 500;
-        }
-
-        .btn-remove:hover {
-            background-color: #dc3545;
-            color: #fff;
-        }
-
-        /* Итоговая стоимость и пустая корзина */
-        .total-price {
-            text-align: right;
-            margin-top: 30px;
-            font-size: 1.5em;
-            color: #212529;
-            background-color: #f8f9fa;
-            padding: 15px 20px;
-            border-radius: 8px;
-            display: inline-block;
-        }
-
-        .empty-cart {
-            text-align: center;
-            padding: 50px 20px;
-            color: #6c757d;
-            font-size: 1.2em;
-        }
-
-        /* Ссылка назад */
-        .back-link {
-            display: inline-block;
-            margin-top: 30px;
-            text-decoration: none;
-            color: #6c757d;
-            font-weight: 500;
-            transition: color 0.2s;
-            clear: both;
-        }
-
-        .back-link:hover {
-            color: #343a40;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="container">
+{% block content %}
+<div class="page-wrap">
+    <div class="cart-shell cart-glass">
         <h1>Ваша корзина</h1>
 
         {% if items %}
-            <table>
+            <table class="data-table">
                 <thead>
                     <tr>
                         <th>Наименование товара</th>
@@ -181,17 +26,17 @@
                             </td>
                             <td>{{ item.product.price }} руб.</td>
                             <td>
-                                <form action="{% url 'main:update_cart' item.id %}" method="post" style="display: flex; gap: 10px; align-items: center; margin: 0;">
+                                <form action="{% url 'main:update_cart' item.id %}" method="post" style="display: flex; gap: 10px; align-items: center; margin: 0; flex-wrap: wrap;">
                                     {% csrf_token %}
-                                    <input type="number" name="quantity" value="{{ item.quantity }}" min="0" max="{{ item.product.amount }}" style="width: 70px;" onblur="if(this.value === '' || this.value < 0) this.value = '0';">
-                                    <button type="submit" class="btn-update">Обновить</button>
+                                    <input type="number" name="quantity" value="{{ item.quantity }}" min="0" max="{{ item.product.amount }}" onblur="if(this.value === '' || this.value < 0) this.value = '0';">
+                                    <button type="submit" class="btn btn-sm btn-primary btn-table">Обновить</button>
                                 </form>
                             </td>
                             <td><strong>{{ item.item_cost }} руб.</strong></td>
                             <td>
                                 <form action="{% url 'main:remove_from_cart' item.id %}" method="post" style="margin: 0;">
                                     {% csrf_token %}
-                                    <button type="submit" class="btn-remove">Удалить</button>
+                                    <button type="submit" class="btn btn-sm btn-outline-danger btn-table">Удалить</button>
                                 </form>
                             </td>
                         </tr>
@@ -199,7 +44,7 @@
                 </tbody>
             </table>
 
-            <div style="overflow: hidden;">
+            <div class="total-row">
                 <div class="total-price">
                     Итого к оплате: <strong>{{ total_price }} руб.</strong>
                 </div>
@@ -211,10 +56,11 @@
             </div>
         {% endif %}
 
-        <div>
+        <div class="page-footer-actions footer-inline-links">
             <a href="{% url 'main:product_list' %}" class="back-link">← Вернуться в каталог</a>
+            <span class="toolbar-greet">·</span>
+            <a href="{% url 'main:home' %}" class="text-link">На главную</a>
         </div>
     </div>
-
-</body>
-</html>
+</div>
+{% endblock %}
