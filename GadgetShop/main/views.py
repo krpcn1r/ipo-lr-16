@@ -24,9 +24,12 @@ def home(request):
 
 
 def product_list(request):
-    category = Category.objects.all().order_by("name")
-    items = Product.objects.select_related("category", "manufacter").all().order_by("category__name", "name")
-
+    category = Category.objects.all().order_by("-is_main", "order", "name")
+    items = Product.objects.select_related("category", "manufacter").all().order_by(
+        "category__order", 
+        "category__name",  
+        "name"             
+    )
     query = (request.GET.get("q") or "").strip()
     category_id = (request.GET.get("category") or "").strip()
     raw_man_id = (request.GET.get("manufacter") or "").strip()
@@ -46,10 +49,16 @@ def product_list(request):
 
     if query:
         q_lower = query.lower()
-        items = items.annotate(
-            _ln=Lower("name"),
-            _ld=Lower("description"),
-        ).filter(Q(_ln__contains=q_lower) | Q(_ld__contains=q_lower))
+        
+        matching_ids = []
+        for item in items:
+            name_match = q_lower in item.name.lower()
+            desc_match = item.description and q_lower in item.description.lower()
+            
+            if name_match or desc_match:
+                matching_ids.append(item.id)
+                
+        items = items.filter(id__in=matching_ids)
 
     if selected_man_id:
         items = items.filter(manufacter_id=selected_man_id)
