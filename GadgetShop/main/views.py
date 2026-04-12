@@ -4,8 +4,12 @@ from django.template.loader import render_to_string
 from django.db.models import Q
 from django.db.models.functions import Lower
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
+from django.core.mail import EmailMessage
+from .forms import UserRegisterForm
 from .models import *
-
+import openpyxl
+from io import BytesIO
 
 def about(request):
     return render(request, "main/about.html")
@@ -162,3 +166,65 @@ def add_to_cart(request, product_id):
         return JsonResponse({"cart_count": cart_count})
 
     return redirect("main:cart_view")
+
+@login_required
+def checkout(request):
+    user_cart, _ = Cart.objects.get_or_create(user=request.user)
+    cart_items = CartItem.objects.filter(cart=user_cart).select_related("product")
+
+    if not cart_items.exists():
+        messages.warning(request, "Ваша корзина пуста.")
+        return redirect("main:cart_view")
+
+    if request.method == "POST":
+        address = request.POST.get("address")
+        
+        wb = openpyxl.Workbook()
+        ws = wb.active
+        ws.title = "Чек заказа"
+        
+        ws.append(["Название товара", "Количество", "Цена за шт.", "Сумма"])
+        
+        total_price = 0
+        for item in cart_items:
+            cost = item.item_cost 
+            total_price += cost
+            ws.append([item.product.name, item.quantity, float(item.product.price), float(cost)])
+            
+        ws.append(["", "", "ИТОГО:", float(total_price)])
+
+        buffer = BytesIO()
+        wb.save(buffer)
+        buffer.seek(0)
+
+        user_email = request.user.email
+        if user_email:
+            email = EmailMessage(
+                subject="Ваш заказ в GadgetShop",
+                body=f"Спасибо за заказ!\n\nАдрес доставки: {address}\nСумма: {total_price} руб.\n\nЧек в формате Excel прикреплен к этому письму.",
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                to=[user_email],
+            )
+            email.attach("receipt.xlsx", buffer.read(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+            email.send(fail_silently=True)
+
+        cart_items.delete()
+
+        return render(request, "shop/checkout_success.html", {"email": user_email})
+
+    total_price = sum(item.item_cost for item in cart_items)
+    return render(request, "shop/checkout.html", {
+        "items": cart_items, 
+        "total_price": total_price
+    })
+
+def register(request):
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            return redirect('main:login')
+    else:
+        form = UserRegisterForm()
+
+    return render(request, 'main/register.html', {'form': form})
