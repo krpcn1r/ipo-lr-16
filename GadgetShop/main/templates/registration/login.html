@@ -1,109 +1,11 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Вход в систему</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
-            color: #333;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+{% extends "main/base.html" %}
 
-        .login-card {
-            background-color: #fff;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            width: 100%;
-            max-width: 350px;
-        }
+{% block title %}Вход | GadgetShop{% endblock %}
 
-        h2 {
-            margin-top: 0;
-            color: #2c3e50;
-            text-align: center;
-            margin-bottom: 25px;
-        }
+{% block body_class %}body-auth{% endblock %}
 
-        /* Стилизация формы, которую генерирует Django */
-        .login-card p {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 15px;
-        }
-
-        .login-card label {
-            margin-bottom: 5px;
-            font-weight: 600;
-            color: #555;
-            font-size: 0.9em;
-        }
-
-        .login-card input[type="text"],
-        .login-card input[type="password"] {
-            padding: 10px 12px;
-            border: 1px solid #ced4da;
-            border-radius: 5px;
-            font-family: inherit;
-            font-size: 1em;
-            transition: border-color 0.2s;
-        }
-
-        .login-card input:focus {
-            outline: none;
-            border-color: #3498db;
-        }
-
-        .btn-submit {
-            background-color: #0d6efd;
-            color: white;
-            border: none;
-            padding: 12px;
-            width: 100%;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 1em;
-            margin-top: 15px;
-            transition: background-color 0.2s;
-        }
-
-        .btn-submit:hover {
-            background-color: #0b5ed7;
-        }
-
-        .help-text {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 0.9em;
-        }
-
-        .help-text a {
-            color: #3498db;
-            text-decoration: none;
-        }
-
-        .help-text a:hover {
-            text-decoration: underline;
-        }
-
-        .error-message {
-            color: #dc3545;
-            font-size: 0.9em;
-            text-align: center;
-            margin-bottom: 15px;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="login-card">
+{% block content %}
+    <div class="auth-card">
         <h2>Вход в аккаунт</h2>
 
         {% if form.errors %}
@@ -114,17 +16,17 @@
 
         <form method="post">
             {% csrf_token %}
-            
             {{ form.as_p }}
-            
-            <button type="submit" class="btn-submit">Войти</button>
+            <button type="submit" class="btn btn-primary btn-submit">Войти</button>
             <input type="hidden" name="next" value="{{ next }}">
         </form>
 
-        <div class="help-text">
-            <a href="{% url 'main:product_list' %}">← Вернуться в магазин</a>
+        <div class="auth-links">
+            <a href="{% url 'main:register' %}">Регистрация</a>
+            ·
+            <a href="{% url 'main:home' %}">Главная</a>
+            ·
+            <a href="{% url 'main:product_list' %}">Каталог</a>
         </div>
     </div>
-
-</body>
-</html>
+{% endblock %}

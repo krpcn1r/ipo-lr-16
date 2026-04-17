@@ -125,3 +125,14 @@ STATIC_URL = 'static/'
 LOGIN_URL = '/accounts/login/'         
 LOGIN_REDIRECT_URL = '/catalog/'        
 LOGOUT_REDIRECT_URL = '/accounts/login/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'noreply@gadgetshop.com'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com' 
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True 
+EMAIL_HOST_USER = "ipolr16@gmail.com"
+EMAIL_HOST_PASSWORD = 'zwzd jjsw tgbv mlcb'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

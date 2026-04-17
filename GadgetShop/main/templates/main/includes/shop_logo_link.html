@@ -1,0 +1,5 @@
+{% load static %}
+<a href="{% url 'main:home' %}" class="shop-logo-link{% if extra_class %} {{ extra_class }}{% endif %}" aria-label="GadgetShop — на главную">
+    <img src="{% static 'main/logo.svg' %}" alt="" width="44" height="44" class="shop-logo-img" decoding="async">
+    <span class="shop-logo-wordmark">GadgetShop</span>
+</a>

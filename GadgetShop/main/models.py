@@ -2,6 +2,7 @@ from django.db import models
 from PortativeGadgetShop import settings
 from django.core.validators import MinLengthValidator, ValidationError
 
+
 class Manufacter(models.Model):
     name = models.CharField(max_length=100)
     country = models.CharField(max_length=100)
@@ -13,7 +14,11 @@ class Manufacter(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
-    
+    is_main = models.BooleanField(default=False, help_text="Является ли категория главной")
+    order = models.PositiveIntegerField(default=100, help_text="Чем меньше число, тем выше в списке")
+    class Meta:
+        ordering = ['order', 'name']
+
     def __str__(self):
         return self.name
 

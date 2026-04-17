@@ -1,0 +1,369 @@
+{% extends "main/base.html" %}
+
+{% block title %}GadgetShop — интернет-магазин гаджетов{% endblock %}
+
+{% block body_class %}store-front{% endblock %}
+
+{% block extra_css %}
+        body.store-front {
+            min-height: 100vh;
+            -webkit-user-select: text;
+            user-select: text;
+        }
+
+        .store-home {
+            max-width: 1220px;
+            margin: 0 auto;
+            padding: 0 20px 56px;
+        }
+
+        .store-home-header {
+            position: sticky;
+            top: 0;
+            z-index: 800;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            padding: 12px 0 14px;
+            margin-bottom: 8px;
+            background: color-mix(in srgb, var(--bg-deep) 78%, transparent);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-bottom: 1px solid var(--hairline);
+            transition: background 0.45s ease, border-color 0.45s ease;
+        }
+
+        html[data-theme="light"] .store-home-header {
+            background: color-mix(in srgb, var(--bg-deep) 88%, transparent);
+        }
+
+        .store-home-header__spacer {
+            flex: 1;
+            min-width: 8px;
+        }
+
+        .store-home-nav {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .store-home-search {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            border-radius: 10px;
+            background: var(--panel-surface);
+            border: 1px solid var(--glass-border);
+            color: var(--muted);
+            font-size: 0.9em;
+            max-width: 220px;
+            transition: background 0.35s ease, border-color 0.35s ease;
+        }
+
+        @media (min-width: 720px) {
+            .store-home-search {
+                display: inline-flex;
+            }
+        }
+
+        .es-hero {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 28px;
+            align-items: center;
+            margin: 28px 0 40px;
+            padding: 36px 32px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.14), rgba(15, 23, 42, 0.35));
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--panel-shadow);
+            overflow: hidden;
+            position: relative;
+            transition: border-color 0.45s ease, box-shadow 0.45s ease;
+        }
+
+        html[data-theme="light"] .es-hero {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(241, 245, 249, 0.95));
+        }
+
+        @media (min-width: 900px) {
+            .es-hero {
+                grid-template-columns: 1.1fr 0.9fr;
+                padding: 44px 48px;
+            }
+        }
+
+        .es-hero__eyebrow {
+            margin: 0 0 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--link);
+        }
+
+        .es-hero__title {
+            margin: 0 0 14px;
+            font-size: clamp(1.85rem, 4vw, 2.65rem);
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -0.03em;
+            transition: color 0.35s ease;
+        }
+
+        .es-hero__lead {
+            margin: 0 0 26px;
+            font-size: 1.08rem;
+            line-height: 1.65;
+            color: var(--muted);
+            max-width: 36rem;
+        }
+
+        .es-hero__ctas {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px 14px;
+        }
+
+        .es-hero__ctas .btn {
+            min-height: 48px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .es-hero__ctas form {
+            margin: 0;
+            display: inline-flex;
+        }
+
+        .es-hero__visual {
+            min-height: 200px;
+            border-radius: 16px;
+            background:
+                radial-gradient(circle at 30% 30%, rgba(56, 189, 248, 0.35), transparent 55%),
+                radial-gradient(circle at 70% 60%, rgba(99, 102, 241, 0.3), transparent 50%),
+                var(--panel-surface);
+            border: 1px solid var(--hairline);
+            position: relative;
+            transition: background 0.45s ease, border-color 0.45s ease;
+        }
+
+        .es-hero__visual::after {
+            content: "📱 🎧 ⌚";
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            letter-spacing: 0.5rem;
+            opacity: 0.45;
+        }
+
+        .es-perks {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .es-perk {
+            padding: 20px 20px;
+            border-radius: 14px;
+            background: var(--panel-surface);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--panel-shadow);
+            transition: transform 0.2s ease, background 0.35s ease;
+        }
+
+        .es-perk:hover {
+            transform: translateY(-2px);
+        }
+
+        .es-perk__icon {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .es-perk h3 {
+            margin: 0 0 6px;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .es-perk p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        .es-section-title {
+            margin: 0 0 18px;
+            font-size: 1.35rem;
+            font-weight: 600;
+        }
+
+        .es-cats {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 14px;
+            margin-bottom: 44px;
+        }
+
+        .es-cat-tile {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 72px;
+            padding: 14px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text);
+            background: var(--panel-surface);
+            border: 1px solid var(--glass-border);
+            transition: transform 0.2s ease, border-color 0.25s ease, box-shadow 0.25s ease, color 0.25s ease;
+        }
+
+        .es-cat-tile:hover {
+            transform: translateY(-3px);
+            border-color: rgba(52, 152, 219, 0.45);
+            box-shadow: var(--catalog-hover-shadow);
+            color: var(--link);
+        }
+
+        html[data-theme="light"] .es-cat-tile:hover {
+            border-color: rgba(37, 99, 235, 0.35);
+        }
+
+        .es-cat-tile--all {
+            background: rgba(52, 152, 219, 0.12);
+            border-color: rgba(52, 152, 219, 0.25);
+            color: var(--link);
+        }
+
+        .es-bottom {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            align-items: center;
+            justify-content: space-between;
+            padding: 24px 26px;
+            border-radius: 16px;
+            background: var(--panel-surface);
+            border: 1px solid var(--glass-border);
+            margin-bottom: 32px;
+        }
+
+        .es-bottom__links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 18px;
+        }
+
+        .es-bottom__links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .es-bottom__links a:hover {
+            color: var(--link);
+        }
+
+        .store-home-footer {
+            text-align: center;
+            padding-top: 8px;
+            font-size: 0.88rem;
+            color: var(--muted);
+        }
+{% endblock %}
+
+{% block content %}
+<div class="store-home">
+    <header class="store-home-header">
+        {% include "main/includes/shop_logo_link.html" %}
+        <div class="store-home-header__spacer"></div>
+        <nav class="store-home-nav" aria-label="Основное меню">
+            <a href="{% url 'main:product_list' %}" class="btn btn-sm btn-primary">Каталог</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'main:cart_view' %}" class="btn btn-sm">Корзина</a>
+                <form action="{% url 'main:logout' %}" method="post" style="margin: 0;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-danger-glass">Выйти</button>
+                </form>
+            {% else %}
+                <a href="{% url 'main:login' %}" class="btn btn-sm btn-white-glass">Войти</a>
+                <a href="{% url 'main:register' %}" class="btn btn-sm btn-white-glass">Регистрация</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <section class="es-hero" aria-labelledby="hero-heading">
+        <div class="es-hero__content">
+            <p class="es-hero__eyebrow">Новинки и хиты продаж</p>
+            <h1 id="hero-heading" class="es-hero__title">Портативная электроника с доставкой и гарантией</h1>
+            <p class="es-hero__lead">
+                Подберите смартфоны, аксессуары и гаджеты от проверенных брендов. Удобные фильтры, корзина для своих покупок и понятные цены в рублях.
+            </p>
+            <div class="es-hero__ctas">
+                <a href="{% url 'main:product_list' %}" class="btn btn-primary btn-hero-cta">Смотреть товары</a>
+                {% if not user.is_authenticated %}
+                    <a href="{% url 'main:login' %}" class="btn btn-white-glass">Войти</a>
+                    <a href="{% url 'main:register' %}" class="btn btn-white-glass">Регистрация</a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="es-hero__visual"></div>
+    </section>
+
+    <section class="es-perks" aria-label="Преимущества">
+        <article class="es-perk">
+            <div class="es-perk__icon">🚚</div>
+            <h3>Быстрая доставка</h3>
+            <p>Отправляем заказы в кратчайшие сроки по выбранному адресу.</p>
+        </article>
+        <article class="es-perk">
+            <div class="es-perk__icon">🛡️</div>
+            <h3>Гарантия качества</h3>
+            <p>Только сертифицированная техника и официальные поставщики.</p>
+        </article>
+        <article class="es-perk">
+            <div class="es-perk__icon">💳</div>
+            <h3>Удобная оплата</h3>
+            <p>Оплатите онлайн или при получении — как вам комфортнее.</p>
+        </article>
+    </section>
+
+    <section aria-labelledby="cats-heading">
+        <h2 id="cats-heading" class="es-section-title">Категории</h2>
+        <div class="es-cats">
+            <a href="{% url 'main:product_list' %}" class="es-cat-tile es-cat-tile--all">Весь каталог</a>
+            {% for cat in home_categories %}
+                <a href="{% url 'main:product_list' %}?category={{ cat.id }}" class="es-cat-tile">{{ cat.name }}</a>
+            {% endfor %}
+        </div>
+    </section>
+
+    <div class="es-bottom">
+        <div class="es-bottom__links">
+            <a href="{% url 'main:about' %}">Об авторе</a>
+            <a href="{% url 'main:shop' %}">О магазине</a>
+        </div>
+        <a href="{% url 'main:product_list' %}" class="btn btn-sm btn-primary">Перейти к покупкам</a>
+    </div>
+
+    <p class="store-home-footer">© GadgetShop — магазин портативных гаджетов</p>
+</div>
+{% endblock %}

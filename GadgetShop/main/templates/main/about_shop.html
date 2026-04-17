@@ -1,0 +1,15 @@
+{% extends "main/base.html" %}
+
+{% block title %}О магазине | GadgetShop{% endblock %}
+
+{% block content %}
+<div class="page-wrap">
+    <div class="shell-narrow">
+        <div class="glass-panel">
+            <a href="{% url 'main:home' %}" class="back-link">← На главную</a>
+            <h1 class="detail-title">О магазине</h1>
+            <p class="simple-text">Магазин портативных гаджетов</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

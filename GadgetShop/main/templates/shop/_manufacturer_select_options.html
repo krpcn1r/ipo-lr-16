@@ -1,0 +1,4 @@
+<option value="">Все производители</option>
+{% for man in manufacter %}
+    <option value="{{ man.id }}"{% if selected_manufacturer_id == man.id|stringformat:"i" %} selected{% endif %}>{{ man.name }}</option>
+{% endfor %}
