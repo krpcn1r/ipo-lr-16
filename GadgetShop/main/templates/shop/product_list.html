@@ -207,7 +207,13 @@
             <a href="{% url 'main:product_list' %}" class="btn-reset">Сбросить</a>
         </form>
 
-        <div class="product-grid">
+                <div style="text-align: center; margin: 30px 0;">
+                    <a href="{% url 'main:url_page' %}" class="btn-submit" style="background-color: #6c757d;">
+                        Перейти на главную страницу раздела
+                    </a>
+                </div>
+
+                <div class="product-grid">
             {% for product in products %}
                 <div class="product-card">
                     <h3 class="product-title"><a href="{% url 'main:product_detail' product.id %}">{{ product.name }}</a></h3>

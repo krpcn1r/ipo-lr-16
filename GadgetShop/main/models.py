@@ -1,8 +1,6 @@
 from django.db import models
 from PortativeGadgetShop import settings
 from django.core.validators import MinLengthValidator, ValidationError
-# Create your models here.
-
 
 class Manufacter(models.Model):
     name = models.CharField(max_length=100)
