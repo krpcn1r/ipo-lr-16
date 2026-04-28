@@ -2,50 +2,70 @@
 
 {% block title %}{{ product.name }} | GadgetShop{% endblock %}
 
+{% block nav_links %}
+    <a href="{% url 'main:product_list' %}" class="btn btn-sm btn-ghost">Каталог</a>
+    <a href="{% url 'main:home' %}" class="btn btn-sm btn-ghost">Главная</a>
+{% endblock %}
+
 {% block content %}
-<div class="page-wrap">
-    <div class="shell-narrow">
-        <div class="glass-panel">
-            <a href="{% url 'main:product_list' %}" class="back-link">← Вернуться в каталог</a>
-
-            <h1 class="detail-title">{{ product.name }}</h1>
-
-            <div class="info-row">
-                <div class="info-label">Категория:</div>
-                <div class="info-value">{{ product.category.name }}</div>
-            </div>
-
-            <div class="info-row">
-                <div class="info-label">Производитель:</div>
-                <div class="info-value">{{ product.manufacter.name }}</div>
-            </div>
-
-            <div class="description-box">
-                <h3 class="description-title">Описание товара</h3>
-                <div>{{ product.description }}</div>
-            </div>
-
-            <div class="price-block">
-                <p class="price-tag">{{ product.price }} руб.</p>
-
-                {% if product.amount > 0 %}
-                    <div class="stock-ok" style="color: black;">В наличии: {{ product.amount }} шт.</div>
-                {% else %}
-                    <div class="stock-bad style="color: black;"">Нет в наличии</div>
-                {% endif %}
-            </div>
-
-            {% if user.is_authenticated %}
-                {% if product.amount > 0 %}
-                    <a href="{% url 'main:add_to_cart' product.id %}" class="btn btn-primary btn-block btn-add-detail">Добавить в корзину</a>
-                {% else %}
-                    <span class="btn btn-block btn-add-detail disabled">Товар закончился</span>
-                {% endif %}
+<div class="shell animate-fade-up">
+    <div class="cart-split" style="display: grid; grid-template-columns: 1fr 400px; gap: 40px; margin-top: 40px; align-items: start;">
+        <!-- Product Visuals -->
+        <div class="glass-panel" style="padding: 40px; display: flex; align-items: center; justify-content: center; min-height: 500px;">
+            {% if product.photo %}
+                <img src="{{ product.photo.url }}" alt="{{ product.name }}" style="max-width: 100%; max-height: 600px; object-fit: contain; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.1));">
             {% else %}
-                <div class="login-alert">
-                    Чтобы добавить товар в корзину, пожалуйста, <a href="{% url 'main:login' %}">авторизуйтесь</a>.
-                </div>
+                <div class="text-muted" style="font-size: 5rem;">📷</div>
             {% endif %}
+        </div>
+
+        <!-- Sticky Product Info -->
+        <aside style="position: sticky; top: 120px;">
+            <div class="glass-panel" style="padding: 32px;">
+                <nav class="mb-4" style="font-size: 0.85rem; opacity: 0.6;">
+                    <a href="{% url 'main:home' %}" class="text-secondary">Главная</a> / 
+                    <a href="{% url 'main:product_list' %}" class="text-secondary">Каталог</a> / 
+                    <span class="text-primary">{{ product.category.name }}</span>
+                </nav>
+
+                <h1 style="font-size: 2.25rem; line-height: 1.2; margin-bottom: 16px;">{{ product.name }}</h1>
+                
+                <div style="display: flex; gap: 12px; margin-bottom: 32px;">
+                    <span class="btn btn-ghost btn-sm" style="background: var(--bg-surface-elevated); cursor: default;">{{ product.manufacter.name }}</span>
+                    {% if product.amount > 0 %}
+                        <span class="btn btn-ghost btn-sm" style="color: hsl(142, 71%, 45%); background: hsla(142, 71%, 45%, 0.1); cursor: default;">В наличии ({{ product.amount }})</span>
+                    {% else %}
+                        <span class="btn btn-ghost btn-sm" style="color: hsl(0, 72%, 51%); background: hsla(0, 72%, 51%, 0.1); cursor: default;">Нет в наличии</span>
+                    {% endif %}
+                </div>
+
+                <div class="mb-4">
+                    <span class="text-muted" style="font-size: 0.9rem; display: block; margin-bottom: 8px;">Стоимость</span>
+                    <div style="font-size: 2.5rem; font-weight: 700; color: var(--accent);">{{ product.price }} <small style="font-size: 1.25rem; font-weight: 500;">руб.</small></div>
+                </div>
+
+                <div class="mt-4 pt-4" style="border-top: 1px solid var(--glass-border);">
+                    {% if user.is_authenticated %}
+                        {% if product.amount > 0 %}
+                            <a href="{% url 'main:add_to_cart' product.id %}" class="btn btn-primary" style="width: 100%; padding: 18px; font-size: 1.1rem; border-radius: var(--radius-md);">Добавить в корзину</a>
+                        {% else %}
+                            <button class="btn btn-secondary" style="width: 100%; padding: 18px; cursor: not-allowed; opacity: 0.5;" disabled>Товар распродан</button>
+                        {% endif %}
+                    {% else %}
+                        <div class="text-center" style="padding: 16px; background: var(--accent-soft); border-radius: var(--radius-sm); border: 1px dashed var(--accent);">
+                            <a href="{% url 'main:login' %}" class="text-accent" style="font-weight: 700;">Войдите</a>, чтобы купить
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </aside>
+
+        <!-- Description Full Width -->
+        <div class="glass-panel" style="grid-column: 1 / -1; margin-top: 20px; padding: 48px;">
+            <h3 style="font-size: 1.5rem; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--glass-border);">Описание и характеристики</h3>
+            <div class="text-secondary" style="line-height: 1.8; font-size: 1.1rem; max-width: 900px;">
+                {{ product.description|linebreaks }}
+            </div>
         </div>
     </div>
 </div>

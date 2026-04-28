@@ -3,30 +3,21 @@
 {% block title %}Заказ оформлен | GadgetShop{% endblock %}
 
 {% block content %}
-<div class="shell" style="display: flex; justify-content: center; padding: 60px 20px;">
-    <div style="
-        max-width: 600px; 
-        width: 100%; 
-        text-align: center; 
-        padding: 40px; 
-        background: rgba(128, 128, 128, 0.1); 
-        backdrop-filter: blur(10px); 
-        border: 1px solid rgba(128, 128, 128, 0.2); 
-        border-radius: 16px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    ">
+<div class="shell animate-fade-up">
+    <div class="glass-panel text-center" style="max-width: 600px; margin: 60px auto; padding: 48px;">
+        <div style="font-size: 4rem; margin-bottom: 24px;">✅</div>
+        <h1 class="mb-4">Заказ оформлен!</h1>
         
-        <h1 style="color: #4CAF50; margin-bottom: 20px; font-size: 2rem;">✅ Заказ успешно оформлен!</h1>
-        
-        <p style="font-size: 1.1rem; color: inherit; opacity: 0.9; line-height: 1.6; margin-bottom: 25px;">
-            Спасибо за покупку! Ваш электронный чек и детали доставки были отправлены на почту:<br>
-            <strong style="display: inline-block; margin-top: 15px; background: rgba(0,0,0,0.05); padding: 10px 20px; border-radius: 8px; font-size: 1.2rem; border: 1px solid rgba(128,128,128,0.2);">
-                {{ email }}
-            </strong>
+        <p class="text-secondary mb-4" style="font-size: 1.1rem; line-height: 1.6;">
+            Спасибо за покупку! Мы отправили электронный чек и детали заказа на вашу почту:
         </p>
+
+        <div style="background: var(--bg-surface-elevated); padding: 16px 24px; border-radius: var(--radius-md); display: inline-block; font-size: 1.25rem; font-weight: 700; border: 1px solid var(--glass-border); margin-bottom: 32px;">
+            {{ email }}
+        </div>
         
-        <div style="margin-top: 30px;">
-            <a href="{% url 'main:product_list' %}" class="btn btn-primary" style="padding: 12px 30px; font-size: 1.1rem;">Продолжить покупки</a>
+        <div>
+            <a href="{% url 'main:product_list' %}" class="btn btn-primary" style="padding: 16px 32px;">Продолжить покупки</a>
         </div>
     </div>
 </div>

@@ -2,63 +2,72 @@
 
 {% block title %}Каталог товаров | GadgetShop{% endblock %}
 
-{% block content %}
-<div class="page-wrap">
-    <div class="shell">
-        <div class="store-strip">
-            {% include "main/includes/shop_logo_link.html" %}
-            <div class="store-strip__spacer"></div>
-            <div class="toolbar">
-                {% if user.is_authenticated %}
-                    <span class="toolbar-greet">Привет, {{ user.username }}!</span>
-                    <a href="{% url 'main:cart_view' %}" class="btn btn-sm btn-primary btn-inline" id="cart-nav-link">
-                        🛒 Корзина
-                        <span id="cart-badge-container">
-                            {% if cart_count and cart_count > 0 %}
-                                <span class="cart-badge" id="cart-badge">{{ cart_count }}</span>
-                            {% endif %}
-                        </span>
-                    </a>
-                    <form action="{% url 'main:logout' %}" method="post" style="margin: 0;">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-sm btn-danger-glass">Выйти</button>
-                    </form>
-                {% else %}
-                    <a href="{% url 'main:login' %}" class="btn btn-sm btn-primary">Войти в аккаунт</a>
+{% block nav_links %}
+    <a href="{% url 'main:home' %}" class="btn btn-sm btn-ghost">Главная</a>
+    {% if user.is_authenticated %}
+        <a href="{% url 'main:cart_view' %}" class="btn btn-sm btn-primary btn-inline" id="cart-nav-link">
+            🛒 Корзина
+            <span id="cart-badge-container">
+                {% if cart_count and cart_count > 0 %}
+                    <span class="cart-badge" id="cart-badge">{{ cart_count }}</span>
                 {% endif %}
-            </div>
-        </div>
-
-        <h1 class="catalog-page-title">Каталог товаров</h1>
-
-        <form method="get" class="filter-bar" id="catalog-filter-form" action="{% url 'main:product_list' %}">
-            <div class="form-field">
-                <label for="q">Поиск по названию</label>
-                <input class="input-dark" type="search" id="q" name="q" value="{{ request.GET.q }}" placeholder="Начните вводить…" autocomplete="off">
-            </div>
-            <div class="form-field">
-                <label for="category">Категория</label>
-                <select class="select-dark" id="category" name="category">
-                    <option value="">Все категории</option>
-                    {% for cat in categories %}
-                        <option value="{{ cat.id }}" {% if request.GET.category == cat.id|stringformat:"i" %}selected{% endif %}>{{ cat.name }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="form-field">
-                <label for="manufacter">Производитель</label>
-                <select class="select-dark" id="manufacter" name="manufacter">
-                    {% include "shop/_manufacturer_select_options.html" %}
-                </select>
-            </div>
-            <div class="filter-actions">
-                <button type="button" class="btn btn-sm btn-reset-filters js-catalog-reset">Сбросить фильтры</button>
-            </div>
+            </span>
+        </a>
+        <form action="{% url 'main:logout' %}" method="post" style="margin: 0; display: inline-block;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-sm btn-danger">Выйти</button>
         </form>
+    {% else %}
+        <a href="{% url 'main:login' %}" class="btn btn-sm btn-primary">Войти</a>
+    {% endif %}
+{% endblock %}
 
-        <div class="catalog-grid" id="catalog-product-grid">
-            {% include "shop/_product_grid.html" %}
-        </div>
+{% block content %}
+<div class="shell animate-fade-up">
+    <div class="catalog-layout" style="display: grid; grid-template-columns: 280px 1fr; gap: 40px; margin-top: 40px;">
+        <!-- Sidebar Filters -->
+        <aside>
+            <div class="glass-panel" style="position: sticky; top: 120px; padding: 24px;">
+                <h2 class="mb-4" style="font-size: 1.25rem;">Фильтры</h2>
+                
+                <form method="get" id="catalog-filter-form" action="{% url 'main:product_list' %}">
+                    <div class="form-field">
+                        <label for="category">Категория</label>
+                        <select id="category" name="category">
+                            <option value="">Все категории</option>
+                            {% for cat in categories %}
+                                <option value="{{ cat.id }}" {% if request.GET.category == cat.id|stringformat:"i" %}selected{% endif %}>{{ cat.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="manufacter">Производитель</label>
+                        <select id="manufacter" name="manufacter">
+                            {% include "shop/_manufacturer_select_options.html" %}
+                        </select>
+                    </div>
+
+                    <button type="button" class="btn btn-secondary js-catalog-reset" style="width: 100%;">Сбросить</button>
+                </form>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            <div class="glass-panel mb-4" style="padding: 20px 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px;">
+                <h1 style="font-size: 1.5rem; margin: 0; white-space: nowrap;">Каталог</h1>
+                
+                <div style="flex: 1; max-width: 500px; position: relative;">
+                    <input type="search" id="q" name="q" form="catalog-filter-form" value="{{ request.GET.q }}" placeholder="Поиск гаджетов..." style="padding-left: 48px;">
+                    <span style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); opacity: 0.5;">🔍</span>
+                </div>
+            </div>
+
+            <div class="product-grid" id="catalog-product-grid" style="margin-top: 0;">
+                {% include "shop/_product_grid.html" %}
+            </div>
+        </main>
     </div>
 </div>
 {% endblock %}

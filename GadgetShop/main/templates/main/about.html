@@ -3,12 +3,13 @@
 {% block title %}Об авторе | GadgetShop{% endblock %}
 
 {% block content %}
-<div class="page-wrap">
-    <div class="shell-narrow">
-        <div class="glass-panel">
-            <a href="{% url 'main:home' %}" class="back-link">← На главную</a>
-            <h1 class="detail-title">Об авторе</h1>
-            <p class="simple-text">Зайцев Степан 89ТП 7 вариант</p>
+<div class="shell animate-fade-up">
+    <div class="glass-panel text-center" style="max-width: 600px; margin: 80px auto; padding: 48px;">
+        <h1 class="mb-4">Об авторе</h1>
+        <p class="text-secondary" style="font-size: 1.2rem; font-weight: 500;">Зайцев Степан</p>
+        <p class="text-muted">Группа 89ТП, вариант 7</p>
+        <div class="mt-4 pt-4" style="border-top: 1px solid var(--glass-border);">
+            <a href="{% url 'main:home' %}" class="btn btn-ghost">← На главную</a>
         </div>
     </div>
 </div>

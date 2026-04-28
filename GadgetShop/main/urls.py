@@ -24,3 +24,17 @@ urlpatterns = [
     path('cart/remove/<int:item_id>/', views.remove_from_cart, name='remove_from_cart'),
     path("checkout/", views.checkout, name="checkout"),
 ]
+
+# API URLs
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+router.register(r'categories', views.CategoryViewSet)
+router.register(r'manufacters', views.ManufacterViewSet)
+router.register(r'products', views.ProductViewSet)
+router.register(r'carts', views.CartViewSet)
+router.register(r'cart-items', views.CartItemViewSet)
+
+urlpatterns += [
+    path('api/', include(router.urls)),
+]

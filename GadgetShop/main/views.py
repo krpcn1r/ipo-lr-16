@@ -23,7 +23,10 @@ def home(request):
     return render(
         request,
         "main/home.html",
-        {"home_categories": Category.objects.all()[:8]},
+        {
+            "home_categories": Category.objects.all()[:8],
+            "featured_products": Product.objects.all().order_by("-id")[:4]
+        },
     )
 
 
@@ -228,3 +231,27 @@ def register(request):
         form = UserRegisterForm()
 
     return render(request, 'main/register.html', {'form': form})
+
+# API Views
+from rest_framework import viewsets
+from .serializers import *
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+class ManufacterViewSet(viewsets.ModelViewSet):
+    queryset = Manufacter.objects.all()
+    serializer_class = ManufacterSerializer
+
+class ProductViewSet(viewsets.ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+class CartViewSet(viewsets.ModelViewSet):
+    queryset = Cart.objects.all()
+    serializer_class = CartSerializer
+
+class CartItemViewSet(viewsets.ModelViewSet):
+    queryset = CartItem.objects.all()
+    serializer_class = CartItemSerializer

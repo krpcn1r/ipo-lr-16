@@ -5,28 +5,48 @@
 {% block body_class %}body-auth{% endblock %}
 
 {% block content %}
-    <div class="auth-card">
-        <h2>Вход в аккаунт</h2>
-
-        {% if form.errors %}
-            <div class="error-message">
-                Неверный логин или пароль. Пожалуйста, попробуйте снова.
+<div class="auth-container shell animate-fade-up">
+    <div class="glass-panel auth-split" style="max-width: 900px; width: 100%; display: grid; grid-template-columns: 1fr 1fr; padding: 0; overflow: hidden; min-height: 500px;">
+        <!-- Branding side -->
+        <div style="background: linear-gradient(135deg, var(--accent-hover), var(--accent)); padding: 60px; display: flex; flex-direction: column; justify-content: center; color: white;">
+            <h2 style="font-size: 2.5rem; margin-bottom: 24px; color: white; white-space: nowrap;">С возвращением!</h2>
+            <p style="font-size: 1.1rem; opacity: 0.9; line-height: 1.6;">Войдите в свой аккаунт, чтобы продолжить покупки и получить доступ к вашим персональным скидкам.</p>
+            
+            <div style="margin-top: 48px; border-left: 4px solid rgba(255,255,255,0.3); padding-left: 24px;">
+                <p style="font-style: italic; opacity: 0.8;">"Самый лучший выбор гаджетов, который я когда-либо видел."</p>
+                <p style="margin-top: 8px; font-weight: 600;">— Довольный клиент</p>
             </div>
-        {% endif %}
+        </div>
 
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary btn-submit">Войти</button>
-            <input type="hidden" name="next" value="{{ next }}">
-        </form>
+        <!-- Form side -->
+        <div style="padding: 60px; background: var(--bg-surface-elevated);">
+            <h2 style="margin-bottom: 32px; text-align: left;">Вход</h2>
 
-        <div class="auth-links">
-            <a href="{% url 'main:register' %}">Регистрация</a>
-            ·
-            <a href="{% url 'main:home' %}">Главная</a>
-            ·
-            <a href="{% url 'main:product_list' %}">Каталог</a>
+            {% if form.errors %}
+                <div style="background: hsla(0, 72%, 51%, 0.1); color: hsl(0, 72%, 51%); padding: 12px; border-radius: var(--radius-sm); margin-bottom: 24px; font-size: 0.85rem;">
+                    Неверный логин или пароль.
+                </div>
+            {% endif %}
+
+            <form method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="form-field">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                    </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 16px; padding: 16px;">Войти в аккаунт</button>
+                <input type="hidden" name="next" value="{{ next }}">
+            </form>
+
+            <div class="auth-links mt-4 text-center">
+                <p style="font-size: 0.9rem; color: var(--text-muted);">
+                    Еще нет аккаунта? <a href="{% url 'main:register' %}" class="text-accent" style="font-weight: 600;">Зарегистрироваться</a>
+                </p>
+                <a href="{% url 'main:home' %}" class="text-secondary" style="display: inline-block; margin-top: 24px; font-size: 0.85rem;">← Вернуться на главную</a>
+            </div>
         </div>
     </div>
+</div>
 {% endblock %}

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main',
     'users',
+    'rest_framework',
 ]
 
 AUTH_USER_MODEL = 'users.User'
@@ -136,3 +137,14 @@ EMAIL_USE_SSL = True
 EMAIL_HOST_USER = "ipolr16@gmail.com"
 EMAIL_HOST_PASSWORD = 'zwzd jjsw tgbv mlcb'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+# DRF Configuration
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ],
+}
