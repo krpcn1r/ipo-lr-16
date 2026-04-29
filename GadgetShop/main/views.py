@@ -10,3 +10,4 @@ def about_shop(request):
 
 def url_page(request):
     return render(request, "main/url_page.html")
+
