@@ -32,10 +32,14 @@ router = DefaultRouter()
 router.register(r'categories', views.CategoryViewSet)
 router.register(r'manufacters', views.ManufacterViewSet)
 router.register(r'products', views.ProductViewSet)
-router.register(r'carts', views.CartViewSet)
-router.register(r'cart-items', views.CartItemViewSet)
+router.register(r'carts', views.CartViewSet, basename='cart')
+router.register(r'cart-items', views.CartItemViewSet, basename='cartitem')
+router.register(r'orders', views.OrderViewSet, basename='order')
 
 urlpatterns += [
+    path('account/', views.account_view, name='account'),
+    path('account/settings/', views.settings_view, name='settings'),
     path('api/cart/add/', views.cart_add_api, name='api_cart_add'),
+    path('api/me/', views.MeView.as_view(), name='api_me'),
     path('api/', include(router.urls)),
 ]

@@ -177,6 +177,28 @@
             });
     }
 
+    // ---------- Единый обработчик ошибок доступа 401/403 (Задание 5) ----------
+    function handleAuthError(status) {
+        if (status === 401) {
+            showNotification("Требуется вход. Пожалуйста, авторизуйтесь.", "warning");
+            return true;
+        }
+        if (status === 403) {
+            showNotification("Недостаточно прав для этого действия.", "danger");
+            return true;
+        }
+        return false;
+    }
+
+    // ---------- Публичные помощники для других страниц ----------
+    window.GadgetShop = {
+        getCsrfToken: getCsrfToken,
+        showNotification: showNotification,
+        updateCartBadge: updateCartBadge,
+        handleAuthError: handleAuthError,
+        spinnerHtml: spinnerHtml,
+    };
+
     // ---------- Инициализация ----------
     document.addEventListener("DOMContentLoaded", function () {
         document.querySelectorAll("[data-api-products]").forEach(loadProductsFromAPI);
