@@ -1,0 +1,16 @@
+{% extends "main/base.html" %}
+
+{% block title %}О магазине | GadgetShop{% endblock %}
+
+{% block content %}
+<div class="shell animate-fade-up">
+    <div class="glass-panel text-center" style="max-width: 600px; margin: 80px auto; padding: 48px;">
+        <h1 class="mb-4">О магазине</h1>
+        <p class="text-secondary" style="font-size: 1.2rem; font-weight: 500;">GadgetShop</p>
+        <p class="text-muted">Магазин портативных гаджетов премиум-класса</p>
+        <div class="mt-4 pt-4" style="border-top: 1px solid var(--glass-border);">
+            <a href="{% url 'main:home' %}" class="btn btn-ghost">← На главную</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

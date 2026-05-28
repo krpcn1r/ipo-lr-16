@@ -1,0 +1,54 @@
+{% extends "main/base.html" %}
+
+{% block title %}Оформление заказа | GadgetShop{% endblock %}
+
+{% block content %}
+<div class="shell animate-fade-up">
+    <div class="glass-panel" style="max-width: 600px; margin: 0 auto;">
+        <h2 class="mb-4">Оформление заказа</h2>
+        
+        <div class="glass-panel mb-4" style="background: var(--bg-surface-elevated);">
+            <h3 class="mb-3">Состав заказа</h3>
+
+            <div class="mb-4">
+                {% for item in items %}
+                <div style="display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 0.95rem;">
+                    <span class="text-secondary">{{ item.product.name }} <small class="text-muted">(x{{ item.quantity }})</small></span>
+                    <span style="font-weight: 600;">{{ item.item_cost }} руб.</span>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--glass-border); padding-top: 16px; margin-top: 16px;">
+                <span style="font-size: 1.1rem; font-weight: 600;">Итого:</span>
+                <span class="text-accent" style="font-size: 1.3rem; font-weight: 700;">{{ total_price }} руб.</span>
+            </div>
+        </div>
+
+        <form method="post" action="{% url 'main:checkout' %}">
+            {% csrf_token %}
+            
+            <div class="form-field">
+                <label for="address">Адрес доставки</label>
+                <textarea 
+                    id="address" 
+                    name="address" 
+                    rows="3" 
+                    required 
+                    placeholder="Укажите город, улицу, дом и квартиру..."
+                ></textarea>
+            </div>
+            
+            <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 24px;">
+                <button type="submit" class="btn btn-primary" style="padding: 16px;">
+                    Подтвердить и получить чек
+                </button>
+                
+                <a href="{% url 'main:cart_view' %}" class="text-center text-secondary" style="font-size: 0.9rem;">
+                    ← Вернуться в корзину
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
