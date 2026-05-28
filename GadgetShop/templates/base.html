@@ -47,6 +47,7 @@
 
                 <div class="d-flex align-items-center gap-2">
                     {% if user.is_authenticated %}
+                        <a href="{% url 'main:account' %}" class="btn btn-light btn-sm">Кабинет</a>
                         <span class="text-white-50 small d-none d-lg-inline">{{ user.username }}</span>
                         <form action="{% url 'main:logout' %}" method="post" class="m-0">
                             {% csrf_token %}

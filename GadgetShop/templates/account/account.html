@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Личный кабинет | GadgetShop{% endblock %}
+
+{% block content %}
+{% if not user.is_authenticated %}
+    <!-- Задание 4.3: гость не вошёл -->
+    <div class="text-center py-5">
+        <div class="display-1">🔒</div>
+        <h1 class="h4 mt-3">Вы не вошли в систему</h1>
+        <p class="text-muted">Войдите в аккаунт, чтобы открыть личный кабинет.</p>
+        <a href="{% url 'main:login' %}?next={% url 'main:account' %}" class="btn btn-gs">Войти</a>
+    </div>
+{% else %}
+<h1 class="h3 mb-4">Личный кабинет</h1>
+
+<div class="row g-4">
+    <!-- Профиль -->
+    <div class="col-lg-5">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <h5 class="card-title mb-0">Профиль</h5>
+                    <span class="badge bg-primary" id="role-badge">…</span>
+                </div>
+
+                <div id="profile-loading">{{ '' }}</div>
+
+                <!-- Просмотр -->
+                <dl class="row mb-3" id="profile-view" style="display:none;">
+                    <dt class="col-5 text-muted">Логин</dt><dd class="col-7" id="v-username"></dd>
+                    <dt class="col-5 text-muted">Email</dt><dd class="col-7" id="v-email"></dd>
+                    <dt class="col-5 text-muted">ФИО</dt><dd class="col-7" id="v-full_name"></dd>
+                    <dt class="col-5 text-muted">Телефон</dt><dd class="col-7" id="v-phone"></dd>
+                    <dt class="col-5 text-muted">Адрес</dt><dd class="col-7" id="v-address"></dd>
+                    <dt class="col-5 text-muted">Любимая категория</dt><dd class="col-7" id="v-favorite_category_name"></dd>
+                    <dt class="col-5 text-muted">Город доставки</dt><dd class="col-7" id="v-delivery_city"></dd>
+                    <dt class="col-5 text-muted">Индекс</dt><dd class="col-7" id="v-postal_code"></dd>
+                </dl>
+
+                <!-- Редактирование (PATCH /api/me/) -->
+                <form id="profile-form" style="display:none;">
+                    <div class="mb-2"><label class="form-label">ФИО</label>
+                        <input class="form-control form-control-sm" name="full_name"></div>
+                    <div class="mb-2"><label class="form-label">Телефон</label>
+                        <input class="form-control form-control-sm" name="phone"></div>
+                    <div class="mb-2"><label class="form-label">Адрес</label>
+                        <input class="form-control form-control-sm" name="address"></div>
+                    <div class="mb-2"><label class="form-label">Любимая категория</label>
+                        <select class="form-select form-select-sm" name="favorite_category">
+                            <option value="">— не выбрано —</option>
+                            {% for cat in categories %}
+                                <option value="{{ cat.id }}">{{ cat.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-2"><label class="form-label">Город доставки</label>
+                        <input class="form-control form-control-sm" name="delivery_city"></div>
+                    <div class="mb-3"><label class="form-label">Индекс</label>
+                        <input class="form-control form-control-sm" name="postal_code"></div>
+                    <button type="submit" class="btn btn-gs btn-sm">Сохранить</button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm" id="cancel-edit">Отмена</button>
+                </form>
+
+                <button class="btn btn-outline-primary btn-sm mt-2" id="edit-btn" style="display:none;">Редактировать</button>
+                <a href="{% url 'main:settings' %}" class="btn btn-outline-secondary btn-sm mt-2">Настройки</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Заказы -->
+    <div class="col-lg-7">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title mb-3">Мои заказы</h5>
+                <div id="orders-box">{{ '' }}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно деталей заказа -->
+<div class="modal fade" id="orderModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Детали заказа</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="order-detail-body"></div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+{% if user.is_authenticated %}
+<script src="{% static 'js/account.js' %}"></script>
+{% endif %}
+{% endblock %}

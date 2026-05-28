@@ -60,7 +60,50 @@ class CartItem(models.Model):
     def clean(self):
         if(self.quantity > self.product.amount):
             raise ValidationError("Недостаточно товара")
-        
+
     def start_check(self, *args, **kwargs):
         self.full_clean()
         super().clean(*args, **kwargs)
+
+
+class Order(models.Model):
+    class Status(models.TextChoices):
+        NEW = "NEW", "Новый"
+        PAID = "PAID", "Оплачен"
+        SHIPPED = "SHIPPED", "Отправлен"
+        DONE = "DONE", "Завершён"
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="orders"
+    )
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата заказа")
+    address = models.CharField(max_length=255, verbose_name="Адрес доставки")
+    total = models.DecimalField(
+        max_digits=12, decimal_places=2, default=0, verbose_name="Сумма"
+    )
+    status = models.CharField(
+        max_length=20, choices=Status.choices, default=Status.NEW, verbose_name="Статус"
+    )
+
+    class Meta:
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"Заказ #{self.id} — {self.user.username}"
+
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="items")
+    product = models.ForeignKey(
+        Product, on_delete=models.SET_NULL, null=True, blank=True, related_name="+"
+    )
+    product_name = models.CharField(max_length=200)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    quantity = models.PositiveIntegerField()
+
+    def __str__(self):
+        return f"{self.product_name} ({self.quantity} шт.)"
+
+    @property
+    def item_cost(self):
+        return self.price * self.quantity
