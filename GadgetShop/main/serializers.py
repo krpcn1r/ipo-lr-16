@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django.urls import reverse
 from .models import Manufacter, Category, Product, Cart, CartItem
 
 class ManufacterSerializer(serializers.ModelSerializer):
@@ -12,9 +13,24 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ProductSerializer(serializers.ModelSerializer):
+    category_name = serializers.CharField(source='category.name', read_only=True)
+    manufacter_name = serializers.CharField(source='manufacter.name', read_only=True)
+    detail_url = serializers.SerializerMethodField()
+    in_stock = serializers.SerializerMethodField()
+
     class Meta:
         model = Product
-        fields = '__all__'
+        fields = [
+            'id', 'name', 'description', 'price', 'amount', 'photo',
+            'category', 'manufacter', 'category_name', 'manufacter_name',
+            'detail_url', 'in_stock',
+        ]
+
+    def get_detail_url(self, obj):
+        return reverse('main:product_detail', args=[obj.id])
+
+    def get_in_stock(self, obj):
+        return obj.amount > 0
 
 class CartItemSerializer(serializers.ModelSerializer):
     class Meta:

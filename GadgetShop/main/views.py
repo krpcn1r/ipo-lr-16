@@ -1,12 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
-from django.template.loader import render_to_string
+from django.core.paginator import Paginator
 from django.db.models import Q
-from django.db.models.functions import Lower
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.core.mail import EmailMessage
-from .forms import UserRegisterForm
 from .models import *
 import openpyxl
 from io import BytesIO
@@ -22,91 +21,60 @@ def about_shop(request):
 def home(request):
     return render(
         request,
-        "main/home.html",
+        "shop/index.html",
         {
-            "home_categories": Category.objects.all()[:8],
-            "featured_products": Product.objects.all().order_by("-id")[:4]
+            "categories": Category.objects.all().order_by("-is_main", "order", "name"),
+            "popular_products": Product.objects.select_related("category", "manufacter")
+            .order_by("-id")[:6],
         },
     )
 
 
 def product_list(request):
-    category = Category.objects.all().order_by("-is_main", "order", "name")
+    categories = Category.objects.all().order_by("-is_main", "order", "name")
+    manufacturers = Manufacter.objects.all().order_by("name")
+
     items = Product.objects.select_related("category", "manufacter").all().order_by(
-        "category__order", 
-        "category__name",  
-        "name"             
+        "category__order", "category__name", "name"
     )
-    query = (request.GET.get("q") or "").strip()
+
+    query = (request.GET.get("search") or "").strip()
     category_id = (request.GET.get("category") or "").strip()
-    raw_man_id = (request.GET.get("manufacter") or "").strip()
+    manufacter_id = (request.GET.get("manufacter") or "").strip()
 
     if category_id:
         items = items.filter(category_id=category_id)
-        manufacter_qs = (
-            Manufacter.objects.filter(manufacter__category_id=category_id)
-            .distinct()
-            .order_by("name")
-        )
-    else:
-        manufacter_qs = Manufacter.objects.all().order_by("name")
-
-    allowed_man_ids = {str(m.id) for m in manufacter_qs}
-    selected_man_id = raw_man_id if raw_man_id in allowed_man_ids else ""
-
+    if manufacter_id:
+        items = items.filter(manufacter_id=manufacter_id)
     if query:
-        q_lower = query.lower()
-        
-        matching_ids = []
-        for item in items:
-            name_match = q_lower in item.name.lower()
-            desc_match = item.description and q_lower in item.description.lower()
-            
-            if name_match or desc_match:
-                matching_ids.append(item.id)
-                
-        items = items.filter(id__in=matching_ids)
+        items = items.filter(Q(name__icontains=query) | Q(description__icontains=query))
 
-    if selected_man_id:
-        items = items.filter(manufacter_id=selected_man_id)
+    paginator = Paginator(items, 9)
+    page_obj = paginator.get_page(request.GET.get("page"))
 
-    cart_count = 0
-    if request.user.is_authenticated:
-        cart_items = CartItem.objects.filter(cart__user=request.user)
-        cart_count = sum(item.quantity for item in cart_items)
+    querystring = request.GET.copy()
+    querystring.pop("page", None)
 
-    context = {
-        "products": items,
-        "categories": category,
-        "manufacter": manufacter_qs,
-        "selected_manufacturer_id": selected_man_id,
-        "cart_count": cart_count,
-    }
-
-    if request.headers.get("x-requested-with") == "XMLHttpRequest":
-        grid_html = render_to_string(
-            "shop/_product_grid.html",
-            context,
-            request=request,
-        )
-        manufacturer_options_html = render_to_string(
-            "shop/_manufacturer_select_options.html",
-            context,
-            request=request,
-        )
-        return JsonResponse(
-            {
-                "html": grid_html,
-                "cart_count": cart_count,
-                "manufacturer_options_html": manufacturer_options_html,
-            }
-        )
-
-    return render(request, "shop/product_list.html", context)
+    return render(
+        request,
+        "shop/catalog.html",
+        {
+            "page_obj": page_obj,
+            "products": page_obj.object_list,
+            "categories": categories,
+            "manufacturers": manufacturers,
+            "selected_category": category_id,
+            "selected_manufacter": manufacter_id,
+            "search_query": query,
+            "querystring": querystring.urlencode(),
+        },
+    )
 
 
 def product_detail(request, pk):
-    product = get_object_or_404(Product, pk=pk)
+    product = get_object_or_404(
+        Product.objects.select_related("category", "manufacter"), pk=pk
+    )
     return render(request, "shop/product_detail.html", {"product": product})
 
 
@@ -221,20 +189,45 @@ def checkout(request):
         "total_price": total_price
     })
 
-def register(request):
-    if request.method == 'POST':
-        form = UserRegisterForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            return redirect('main:login')
-    else:
-        form = UserRegisterForm()
-
-    return render(request, 'main/register.html', {'form': form})
-
 # API Views
 from rest_framework import viewsets
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 from .serializers import *
+
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def cart_add_api(request):
+    """Добавление товара в корзину через API (используется в static/js/main.js)."""
+    product_id = request.data.get("product_id")
+    product = get_object_or_404(Product, pk=product_id)
+
+    user_cart, _ = Cart.objects.get_or_create(user=request.user)
+    cart_item, created = CartItem.objects.get_or_create(
+        cart=user_cart, product=product, defaults={"quantity": 1}
+    )
+
+    if not created:
+        if cart_item.quantity < product.amount:
+            cart_item.quantity += 1
+            cart_item.save()
+        else:
+            return Response(
+                {"error": f"Нельзя добавить больше: на складе всего {product.amount} шт."},
+                status=400,
+            )
+
+    cart_count = sum(
+        i.quantity for i in CartItem.objects.filter(cart__user=request.user)
+    )
+    return Response(
+        {
+            "cart_count": cart_count,
+            "message": f"«{product.name}» добавлен в корзину",
+        }
+    )
 
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()

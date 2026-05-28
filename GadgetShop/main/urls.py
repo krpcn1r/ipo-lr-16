@@ -36,5 +36,6 @@ router.register(r'carts', views.CartViewSet)
 router.register(r'cart-items', views.CartItemViewSet)
 
 urlpatterns += [
+    path('api/cart/add/', views.cart_add_api, name='api_cart_add'),
     path('api/', include(router.urls)),
 ]
