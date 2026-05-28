@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Заказ оформлен | GadgetShop{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-6 text-center py-5">
+        <div class="display-1">✅</div>
+        <h1 class="h3 mt-3 mb-3">Заказ оформлен!</h1>
+        <p class="text-secondary">Спасибо за покупку! Электронный чек и детали заказа отправлены на вашу почту:</p>
+        <p class="fw-bold fs-5">{{ email }}</p>
+        <a href="{% url 'main:product_list' %}" class="btn btn-gs mt-3">Продолжить покупки</a>
+    </div>
+</div>
+{% endblock %}

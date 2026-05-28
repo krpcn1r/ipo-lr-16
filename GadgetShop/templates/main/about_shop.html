@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}О магазине | GadgetShop{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 text-center py-5">
+        <h1 class="h3 mb-3">О магазине</h1>
+        <p class="fs-5 fw-semibold mb-1">GadgetShop</p>
+        <p class="text-muted">Магазин портативных гаджетов: смартфоны, наушники, умные часы,
+            повербанки и аксессуары ведущих брендов.</p>
+        <a href="{% url 'main:home' %}" class="btn btn-outline-secondary mt-3">← На главную</a>
+    </div>
+</div>
+{% endblock %}
