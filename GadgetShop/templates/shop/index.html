@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}GadgetShop — портативные гаджеты для активной жизни{% endblock %}
+
+{% block content %}
+<!-- Hero-секция -->
+<section class="hero p-4 p-md-5 mb-5">
+    <div class="row align-items-center">
+        <div class="col-lg-7">
+            <h1 class="display-5 mb-3">Портативные гаджеты <span class="text-info">для вашего комфорта</span></h1>
+            <p class="lead mb-4">
+                Смартфоны, наушники, умные часы, повербанки и аксессуары топовых брендов.
+                Всё, что делает каждый день удобнее — в одном месте.
+            </p>
+            <a href="{% url 'main:product_list' %}" class="btn btn-light btn-lg fw-semibold">Перейти в каталог</a>
+        </div>
+        <div class="col-lg-5 text-center d-none d-lg-block">
+            <span style="font-size: 9rem;">📱⌚🎧</span>
+        </div>
+    </div>
+</section>
+
+<!-- Популярные товары -->
+<section class="mb-5">
+    <div class="d-flex justify-content-between align-items-end mb-4">
+        <div>
+            <h2 class="h3 mb-1">Популярные товары</h2>
+            <p class="text-muted mb-0">Новые поступления нашего магазина</p>
+        </div>
+        <a href="{% url 'main:product_list' %}" class="text-decoration-none fw-semibold">Смотреть все →</a>
+    </div>
+
+    <div class="row">
+        {% for product in popular_products %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 product-card">
+                    {% if product.photo %}
+                        <img src="{{ product.photo.url }}" class="card-img-top product-thumb" alt="{{ product.name }}">
+                    {% else %}
+                        <div class="product-thumb-placeholder">📦</div>
+                    {% endif %}
+                    <div class="card-body d-flex flex-column">
+                        <span class="badge bg-light text-dark align-self-start mb-2">{{ product.category.name }}</span>
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="text-muted small mb-2">{{ product.manufacter.name }}</p>
+                        <div class="price-tag mb-3 mt-auto">{{ product.price }} руб.</div>
+                        <div class="d-flex gap-2">
+                            <a href="{% url 'main:product_detail' product.id %}" class="btn btn-outline-primary btn-sm flex-grow-1">Подробнее</a>
+                            {% if product.amount > 0 %}
+                                <button class="btn btn-gs btn-sm js-add-to-cart" data-product-id="{{ product.id }}">В корзину</button>
+                            {% else %}
+                                <button class="btn btn-secondary btn-sm" disabled>Нет в наличии</button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12"><div class="alert alert-info">Товары скоро появятся.</div></div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Категории -->
+<section class="mb-4">
+    <h2 class="h3 mb-4">Категории товаров</h2>
+    <div class="row g-3">
+        {% for cat in categories %}
+            <div class="col-6 col-md-3">
+                <a href="{% url 'main:product_list' %}?category={{ cat.id }}" class="category-pill">
+                    <span class="emoji">
+                        {% if "смарт" in cat.name.lower or "мобиль" in cat.name.lower or "сотов" in cat.name.lower %}📱{% elif "ноут" in cat.name.lower or "комп" in cat.name.lower %}💻{% elif "науш" in cat.name.lower %}🎧{% elif "час" in cat.name.lower %}⌚{% elif "планш" in cat.name.lower %}📲{% elif "фото" in cat.name.lower or "камер" in cat.name.lower %}📷{% elif "гейм" in cat.name.lower or "игр" in cat.name.lower %}🎮{% elif "здор" in cat.name.lower %}🩺{% elif "спорт" in cat.name.lower %}🏃{% elif "заряд" in cat.name.lower or "повер" in cat.name.lower %}🔋{% elif "авто" in cat.name.lower %}🚗{% elif "стек" in cat.name.lower %}🛡️{% elif "чех" in cat.name.lower %}📦{% elif "аксес" in cat.name.lower %}🔌{% else %}📦{% endif %}
+                    </span>
+                    {{ cat.name }}
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

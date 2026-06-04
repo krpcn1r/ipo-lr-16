@@ -1,0 +1,156 @@
+/* GadgetShop — фирменная тема магазина портативных гаджетов.
+   Дополняет Bootstrap 5 (цветовая схema: небесно-синий → насыщенный синий). */
+
+:root {
+    --gs-primary: #1d4ed8;
+    --gs-primary-dark: #1e40af;
+    --gs-accent: #38bdf8;
+    --gs-dark: #0f172a;
+    --gs-soft: #f1f5f9;
+}
+
+body {
+    background-color: var(--gs-soft);
+    color: #1e293b;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+/* ---------- Навигация ---------- */
+.navbar-brand img {
+    height: 36px;
+    width: 36px;
+}
+
+.navbar-gs {
+    background: linear-gradient(135deg, var(--gs-primary-dark), var(--gs-primary)) !important;
+}
+
+.navbar-gs .navbar-brand,
+.navbar-gs .nav-link {
+    color: #fff !important;
+}
+
+.navbar-gs .nav-link:hover {
+    color: var(--gs-accent) !important;
+}
+
+.cart-badge {
+    font-size: 0.7rem;
+    vertical-align: top;
+}
+
+/* ---------- Кнопки ---------- */
+.btn-gs {
+    background: linear-gradient(135deg, var(--gs-accent), var(--gs-primary));
+    border: none;
+    color: #fff;
+}
+
+.btn-gs:hover {
+    background: linear-gradient(135deg, var(--gs-primary), var(--gs-primary-dark));
+    color: #fff;
+}
+
+/* ---------- Hero ---------- */
+.hero {
+    background: linear-gradient(135deg, var(--gs-dark), var(--gs-primary));
+    color: #fff;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.hero h1 {
+    font-weight: 700;
+}
+
+/* ---------- Карточки товаров ---------- */
+.product-card {
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    border: 1px solid #e2e8f0;
+}
+
+.product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
+}
+
+.product-card .product-thumb {
+    height: 200px;
+    object-fit: contain;
+    background: #fff;
+    padding: 1rem;
+}
+
+.product-thumb-placeholder {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: #cbd5e1;
+    background: #f8fafc;
+}
+
+.price-tag {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--gs-primary);
+}
+
+/* ---------- Категории ---------- */
+.category-pill {
+    display: block;
+    text-decoration: none;
+    color: #1e293b;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.75rem;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    transition: all 0.18s ease;
+}
+
+.category-pill:hover {
+    border-color: var(--gs-primary);
+    color: var(--gs-primary);
+    transform: translateY(-3px);
+}
+
+.category-pill .emoji {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+/* ---------- Детальная страница ---------- */
+.detail-photo {
+    max-height: 460px;
+    object-fit: contain;
+    width: 100%;
+}
+
+/* ---------- Футер ---------- */
+.footer-gs {
+    background: var(--gs-dark);
+    color: #cbd5e1;
+}
+
+.footer-gs a {
+    color: var(--gs-accent);
+    text-decoration: none;
+}
+
+/* ---------- Уведомления (toast) ---------- */
+#gs-toast-container {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1080;
+    max-width: 360px;
+}
