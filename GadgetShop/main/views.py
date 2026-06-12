@@ -10,6 +10,9 @@ from django.core.mail import EmailMessage
 from .models import *
 import openpyxl
 from io import BytesIO
+import logging
+
+logger = logging.getLogger(__name__)
 
 def about(request):
     return render(request, "main/about.html")
@@ -221,7 +224,8 @@ def checkout(request):
         wb.save(buffer)
         buffer.seek(0)
 
-        user_email = request.user.email
+        user_email = (request.user.email or "").strip()
+        email_sent = False
         if user_email:
             email = EmailMessage(
                 subject="Ваш заказ в GadgetShop",
@@ -230,9 +234,26 @@ def checkout(request):
                 to=[user_email],
             )
             email.attach("receipt.xlsx", buffer.read(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-            email.send(fail_silently=True)
+            try:
+                email.send(fail_silently=False)
+                email_sent = True
+            except Exception:
+                logger.exception("Failed to send checkout receipt email to %s", user_email)
+                messages.warning(
+                    request,
+                    "Заказ оформлен, но письмо с чеком не удалось отправить. Проверьте email или SMTP-настройки.",
+                )
+        else:
+            messages.warning(
+                request,
+                "Заказ оформлен, но у аккаунта не указан email для отправки чека.",
+            )
 
-        return render(request, "shop/checkout_success.html", {"email": user_email})
+        return render(
+            request,
+            "shop/checkout_success.html",
+            {"email": user_email, "email_sent": email_sent},
+        )
 
     total_price = sum(item.item_cost for item in cart_items)
     return render(request, "shop/checkout.html", {

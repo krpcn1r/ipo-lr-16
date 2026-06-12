@@ -7,8 +7,15 @@
     <div class="col-lg-6 text-center py-5">
         <div class="display-1">✅</div>
         <h1 class="h3 mt-3 mb-3">Заказ оформлен!</h1>
-        <p class="text-secondary">Спасибо за покупку! Электронный чек и детали заказа отправлены на вашу почту:</p>
-        <p class="fw-bold fs-5">{{ email }}</p>
+        {% if email_sent %}
+            <p class="text-secondary">Спасибо за покупку! Электронный чек и детали заказа отправлены на вашу почту:</p>
+            <p class="fw-bold fs-5">{{ email }}</p>
+        {% else %}
+            <p class="text-secondary">Спасибо за покупку! Заказ сохранён.</p>
+            <div class="alert alert-warning text-start">
+                Чек не удалось отправить на почту{% if email %} {{ email }}{% endif %}. Проверьте email в аккаунте или SMTP-настройки.
+            </div>
+        {% endif %}
         <a href="{% url 'main:product_list' %}" class="btn btn-gs mt-3">Продолжить покупки</a>
     </div>
 </div>
