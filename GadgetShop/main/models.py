@@ -1,6 +1,6 @@
 from django.db import models
 from PortativeGadgetShop import settings
-from django.core.validators import MinLengthValidator, ValidationError
+from django.core.validators import MinValueValidator, ValidationError
 
 
 class Manufacter(models.Model):
@@ -28,8 +28,8 @@ class Product(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField()
     photo = models.ImageField(upload_to='products/%Y/%m/%d/', blank=True,)
-    price = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinLengthValidator])
-    amount = models.IntegerField(validators=[MinLengthValidator])
+    price = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(0)])
+    amount = models.IntegerField(validators=[MinValueValidator(0)])
 
     def __str__(self):
         return self.name
@@ -43,7 +43,7 @@ class Cart(models.Model):
     
     @property
     def total_cost(self):
-        return sum(i.item_cost for i in self.items.all())
+        return sum(i.item_cost for i in self.cart.all())
     
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name="cart")
@@ -51,7 +51,7 @@ class CartItem(models.Model):
     quantity = models.PositiveIntegerField()
 
     def __str__(self):
-        return f"{self.product.__str__} ({self.quantity} шт.)"
+        return f"{self.product} ({self.quantity} шт.)"
     
     @property
     def item_cost(self):
@@ -61,9 +61,9 @@ class CartItem(models.Model):
         if(self.quantity > self.product.amount):
             raise ValidationError("Недостаточно товара")
 
-    def start_check(self, *args, **kwargs):
+    def save(self, *args, **kwargs):
         self.full_clean()
-        super().clean(*args, **kwargs)
+        super().save(*args, **kwargs)
 
 
 class Order(models.Model):
