@@ -11,7 +11,6 @@ def user_is_admin(user):
 
 
 class IsAdminOrReadOnly(BasePermission):
-    """Чтение доступно всем, изменение — только администратору."""
 
     def has_permission(self, request, view):
         if request.method in SAFE_METHODS:
