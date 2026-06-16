@@ -1,1 +1,1 @@
-web: cd GadgetShop && python manage.py collectstatic --noinput && gunicorn PortativeGadgetShop.wsgi:application --log-file -
+web: cd GadgetShop && python manage.py migrate --noinput && python manage.py collectstatic --noinput && (python manage.py createsuperuser --noinput || true) && gunicorn PortativeGadgetShop.wsgi:application --log-file -
