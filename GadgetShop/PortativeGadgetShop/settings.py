@@ -168,6 +168,10 @@ DEFAULT_FROM_EMAIL = config(
     default=EMAIL_HOST_USER or "noreply@gadgetshop.com",
 )
 
+# Ключ Brevo HTTP API (используется main.email_backends.BrevoApiEmailBackend,
+# когда SMTP недоступен — например, на бесплатном тарифе Railway)
+BREVO_API_KEY = config("BREVO_API_KEY", default="")
+
 SESSION_COOKIE_SECURE = not DEBUG
 CSRF_COOKIE_SECURE = not DEBUG
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
