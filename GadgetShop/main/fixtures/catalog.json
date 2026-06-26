@@ -1,0 +1,643 @@
+[
+{
+  "model": "main.category",
+  "pk": 1,
+  "fields": {
+    "name": "Мобильные устройства сотовой связи",
+    "description": "Мобильные устройства сотовой связи",
+    "is_main": false,
+    "order": 1
+  }
+},
+{
+  "model": "main.category",
+  "pk": 2,
+  "fields": {
+    "name": "Защитные стекла",
+    "description": "Защитные стекла на мобильные устройства сотовой связи",
+    "is_main": false,
+    "order": 100
+  }
+},
+{
+  "model": "main.category",
+  "pk": 3,
+  "fields": {
+    "name": "Гаджеты для спорта",
+    "description": "Гаджеты для спорта",
+    "is_main": false,
+    "order": 4
+  }
+},
+{
+  "model": "main.category",
+  "pk": 4,
+  "fields": {
+    "name": "Гаджеты для здоровья",
+    "description": "Гаджеты для здоровья",
+    "is_main": false,
+    "order": 3
+  }
+},
+{
+  "model": "main.category",
+  "pk": 5,
+  "fields": {
+    "name": "Гаджеты для автомобилей",
+    "description": "Гаджеты для автомобилей",
+    "is_main": false,
+    "order": 100
+  }
+},
+{
+  "model": "main.category",
+  "pk": 6,
+  "fields": {
+    "name": "Зарядные устройства и повербанки",
+    "description": "Зарядные устройства и повербанки",
+    "is_main": false,
+    "order": 5
+  }
+},
+{
+  "model": "main.category",
+  "pk": 7,
+  "fields": {
+    "name": "ГЕЙминг",
+    "description": "ГЕЙминг",
+    "is_main": false,
+    "order": 100
+  }
+},
+{
+  "model": "main.category",
+  "pk": 8,
+  "fields": {
+    "name": "Чехлы",
+    "description": "Чехлы, рюкзаки и сумки",
+    "is_main": false,
+    "order": 100
+  }
+},
+{
+  "model": "main.category",
+  "pk": 9,
+  "fields": {
+    "name": "Аксессуары",
+    "description": "Аксессуары",
+    "is_main": false,
+    "order": 100
+  }
+},
+{
+  "model": "main.category",
+  "pk": 10,
+  "fields": {
+    "name": "Наушники",
+    "description": "Наушники",
+    "is_main": false,
+    "order": 2
+  }
+},
+{
+  "model": "main.manufacter",
+  "pk": 1,
+  "fields": {
+    "name": "Apple",
+    "country": "Usa",
+    "description": "Global manufacter of electronics"
+  }
+},
+{
+  "model": "main.manufacter",
+  "pk": 2,
+  "fields": {
+    "name": "Huawei",
+    "country": "China",
+    "description": "Manufacter of techniques"
+  }
+},
+{
+  "model": "main.manufacter",
+  "pk": 3,
+  "fields": {
+    "name": "Samsung",
+    "country": "South Korea",
+    "description": "Worldwide manufacter of various technique"
+  }
+},
+{
+  "model": "main.manufacter",
+  "pk": 4,
+  "fields": {
+    "name": "VLP",
+    "country": "Китай",
+    "description": "Защитные стекла VLP"
+  }
+},
+{
+  "model": "main.manufacter",
+  "pk": 5,
+  "fields": {
+    "name": "uBear",
+    "country": "Китай",
+    "description": "Защитные стекла"
+  }
+},
+{
+  "model": "main.manufacter",
+  "pk": 6,
+  "fields": {
+    "name": "Xiaomi",
+    "country": "Китай",
+    "description": "Делают все начиная от ручек заканчивая коллайдером"
+  }
+},
+{
+  "model": "main.manufacter",
+  "pk": 7,
+  "fields": {
+    "name": "Baseus",
+    "country": "Китай",
+    "description": "Китайщина"
+  }
+},
+{
+  "model": "main.manufacter",
+  "pk": 8,
+  "fields": {
+    "name": "Ugreen",
+    "country": "Китай",
+    "description": "."
+  }
+},
+{
+  "model": "main.manufacter",
+  "pk": 9,
+  "fields": {
+    "name": "Mchoose",
+    "country": "Китай",
+    "description": "Клавиатуры"
+  }
+},
+{
+  "model": "main.manufacter",
+  "pk": 10,
+  "fields": {
+    "name": "Royal Kludge",
+    "country": "Китай",
+    "description": ".."
+  }
+},
+{
+  "model": "main.manufacter",
+  "pk": 11,
+  "fields": {
+    "name": "Pitaka",
+    "country": "США",
+    "description": "Чехлы"
+  }
+},
+{
+  "model": "main.product",
+  "pk": 1,
+  "fields": {
+    "category": 1,
+    "manufacter": 3,
+    "name": "Смартфон Samsung Galaxy S25 SM-S931B 12GB/256GB (серый)",
+    "description": "Android, экран 6.2\" AMOLED (1080x2340) 120 Гц, Qualcomm Snapdragon 8 Elite, ОЗУ 12 ГБ, память 256 ГБ, камера 50 Мп, аккумулятор 4000 мАч, 2 SIM (nano-SIM/eSIM), влагозащита IP68",
+    "photo": "products/2026/02/26/lp0j0gbin8q6ruw01xj74dapbm6mkqn0.webp",
+    "price": "3299.00",
+    "amount": 23
+  }
+},
+{
+  "model": "main.product",
+  "pk": 2,
+  "fields": {
+    "category": 1,
+    "manufacter": 2,
+    "name": "Смартфон Huawei nova 13 BLK-LX9 12GB/256GB (белый)",
+    "description": "Смартфон толщиной всего 6,98 мм с геометричной текстурой корпуса и заметным «орбитальным» кольцом камеры. Акцент на селфи и портреты: фронтальная ультраширокоугольная камера 60 МП удобно снимает в компании и захватывает больше фона, поддерживает видео до 4K. Плоский OLED-экран 6,7\" 120 Гц делает прокрутку плавной, текст выглядит четко. Основная камера 50 МП подходит для повседневных фото, есть ультраширокий макро 8 МП. Батарея 5000 мА·ч и зарядка 100 Вт выручают, когда нужно быстро зарядиться перед выходом.",
+    "photo": "products/2026/02/26/9y0nzst74t9tmynrmzqnozhrnzewycyk.webp",
+    "price": "799.00",
+    "amount": 48
+  }
+},
+{
+  "model": "main.product",
+  "pk": 3,
+  "fields": {
+    "category": 1,
+    "manufacter": 1,
+    "name": "Телефон Apple iPhone 17 Dual SIM 256GB (черный)",
+    "description": "Прочное стекло Ceramic Shield 2 и корпус с защитой от воды. Строгий и лаконичный цвет, который всегда в моде. Экран Super Retina XDR 6,3″ с ProMotion до 120 Гц и Always-On, яркость до 3000 нит позволяет пользоваться им даже под солнцем. Две камеры по 48 Мп снимают чётко днём и ночью, фронтальная 18 Мп с Center Stage держит всех в кадре. Чип A19 справляется с играми и Apple Intelligence, а аккумулятора хватает до 30 часов видео. Поддержка 5G, Wi-Fi 7 и спутниковых функций.",
+    "photo": "products/2026/02/26/hfj6d3q2wctu7ey2rktlaonoh2f3aprg.webp",
+    "price": "3399.00",
+    "amount": 56
+  }
+},
+{
+  "model": "main.product",
+  "pk": 4,
+  "fields": {
+    "category": 2,
+    "manufacter": 4,
+    "name": "Защитное стекло для Apple iPhone 17, 17 Pro, 16 Pro на весь экран противоударное VLP Premium Shield 2.5D черное",
+    "description": "На весь экран противоударное VLP Premium Shield 2.5D черное",
+    "photo": "",
+    "price": "54.90",
+    "amount": 6
+  }
+},
+{
+  "model": "main.product",
+  "pk": 5,
+  "fields": {
+    "category": 2,
+    "manufacter": 4,
+    "name": "Защитное стекло для Samsung Galaxy S25 Ultra на весь экран противоударное VLP Easy Box черное",
+    "description": "Hа весь экран противоударное VLP Easy Box черное",
+    "photo": "products/2026/02/26/aqm5nv4k5kxaa1mufdxc7ob5hu5vb682.webp",
+    "price": "79.90",
+    "amount": 11
+  }
+},
+{
+  "model": "main.product",
+  "pk": 6,
+  "fields": {
+    "category": 2,
+    "manufacter": 5,
+    "name": "Защитное стекло uBear Extreme Nano для Samsung Galaxy S24",
+    "description": "Защитное стекло uBear Extreme Nano для Samsung Galaxy S24",
+    "photo": "products/2026/02/26/5o1iyxom7ndud4guoarmftxy7n4frh9d.webp",
+    "price": "24.90",
+    "amount": 12
+  }
+},
+{
+  "model": "main.product",
+  "pk": 7,
+  "fields": {
+    "category": 3,
+    "manufacter": 1,
+    "name": "Умные часы Apple Watch SE 3 40 мм (алюминиевый корпус, полуночный/полуночный, спортивный силиконовый ремешок M/L)",
+    "description": "синхронизация с iOS, экран OLED, поддержка SIM-карты: нет, пульсометр, AOD, GPS, Bluetooth 5.3, корпус: металл (алюминий), ремешок: силикон",
+    "photo": "products/2026/02/26/a6t96e5eadulmvodxmdipipi94syq8ty.webp",
+    "price": "999.00",
+    "amount": 32
+  }
+},
+{
+  "model": "main.product",
+  "pk": 8,
+  "fields": {
+    "category": 3,
+    "manufacter": 3,
+    "name": "Умные часы Samsung Galaxy Watch8 40 мм LTE (графит)",
+    "description": "синхронизация с Android, экран AMOLED 1.34\", поддержка SIM-карты: eSIM, пульсометр, измерение кислорода в крови, измерение артериального давления, ЭКГ, AOD, GPS, Bluetooth 5.3, корпус: металл (алюминий), ремешок: силикон",
+    "photo": "products/2026/02/26/8a2j29entmxsxy7tbwkoesx9ihhvtkgr.webp",
+    "price": "899.00",
+    "amount": 8
+  }
+},
+{
+  "model": "main.product",
+  "pk": 9,
+  "fields": {
+    "category": 3,
+    "manufacter": 2,
+    "name": "Умные часы Huawei Watch GT 6 46 мм (черный, с черным силиконовым ремешком, международная версия)",
+    "description": "синхронизация с Android/iOS, экран AMOLED 1.47\", поддержка SIM-карты: нет, пульсометр, измерение кислорода в крови, AOD, GPS, Bluetooth 6.0, корпус: металл (сталь), ремешок: силикон",
+    "photo": "products/2026/02/26/n025rbq50oqksjfmakfq1sca6hgbrkrq.webp",
+    "price": "599.00",
+    "amount": 21
+  }
+},
+{
+  "model": "main.product",
+  "pk": 10,
+  "fields": {
+    "category": 4,
+    "manufacter": 6,
+    "name": "Очиститель воздуха Xiaomi Smart Air Purifier 4 Compact белый",
+    "description": "Очиститель воздуха Xiaomi Smart Air Purifier 4 Compact белый",
+    "photo": "products/2026/02/26/xjdbkid9zxumqykemktotv2296za0tj1.webp",
+    "price": "799.00",
+    "amount": 0
+  }
+},
+{
+  "model": "main.product",
+  "pk": 11,
+  "fields": {
+    "category": 4,
+    "manufacter": 6,
+    "name": "Расчёска Xiaomi Mijia Wireless Hair Straightener MJZFS01LF",
+    "description": "расчёска, регулировка температуры: 3 режима, максимальная температура: 200 °С",
+    "photo": "products/2026/02/26/iof7u2amgjmo642xoevxiq49xk8ca4je.webp",
+    "price": "199.00",
+    "amount": 6
+  }
+},
+{
+  "model": "main.product",
+  "pk": 12,
+  "fields": {
+    "category": 4,
+    "manufacter": 6,
+    "name": "Напольные весы Xiaomi Mijia Body Fat Scale S400 (китайская версия)",
+    "description": "умные, максимальная нагрузка: 150 кг, 25 измеряемых показателей.",
+    "photo": "products/2026/02/26/5uvativ2o8xhtt8upngfwc87ffj734r1.webp",
+    "price": "89.00",
+    "amount": 3
+  }
+},
+{
+  "model": "main.product",
+  "pk": 13,
+  "fields": {
+    "category": 5,
+    "manufacter": 7,
+    "name": "Автомобильный пылесос Baseus A2Pro Car Vacuum Cleaner VCAQ040001 белый",
+    "description": "Мощность 80 Вт и сила всасывания до 60 мБар позволяют эффективно собирать пыль, песок, крошки и мелкий мусор с ковриков, сидений и труднодоступных зон. Циклонный контейнер не требует расходников, а HEPA-фильтр задерживает мелкие частицы. Встроенный аккумулятор 2000 мАч обеспечивает до 18 минут автономной работы — достаточно для полной уборки автомобиля. В комплекте щелевая насадка для узких мест и насадка-щётка.",
+    "photo": "products/2026/02/26/zq3vxio344jf82jbyk7lk1rlh9ggd65k.webp",
+    "price": "139.00",
+    "amount": 14
+  }
+},
+{
+  "model": "main.product",
+  "pk": 14,
+  "fields": {
+    "category": 5,
+    "manufacter": 8,
+    "name": "Автомобильный пылесос беспроводной Ugreen CD236 серый",
+    "description": "Автомобильный пылесос беспроводной Ugreen CD236 серый",
+    "photo": "products/2026/02/26/5h3krkhittvodfl4jaww36qfli8s6rfq.webp",
+    "price": "234.00",
+    "amount": 0
+  }
+},
+{
+  "model": "main.product",
+  "pk": 15,
+  "fields": {
+    "category": 5,
+    "manufacter": 6,
+    "name": "Пылесос Xiaomi Mi Vacuum Cleaner Mini EU",
+    "description": "портативный, пылесборник: контейнер, потребление: 120 Вт, регулировка мощности на ручке",
+    "photo": "products/2026/02/26/bcxcozvp3z95l5e6hdyg8sd5dxfwkhs1.webp",
+    "price": "199.00",
+    "amount": 2
+  }
+},
+{
+  "model": "main.product",
+  "pk": 16,
+  "fields": {
+    "category": 6,
+    "manufacter": 8,
+    "name": "Внешний аккумулятор Ugreen MagFlow PB773 10000mAh (голубой)",
+    "description": "корзину\r\n10000 мА·ч (36 Вт·ч), выходы: 2 x 5V/10V/12V/15V (3000 мА), быстрая зарядка, беспроводная зарядка, поддержка MagSafe, крепление на смартфон",
+    "photo": "products/2026/02/26/zqhud7yjffrke3s1h44bwdrf8na0pgzo.webp",
+    "price": "179.00",
+    "amount": 6
+  }
+},
+{
+  "model": "main.product",
+  "pk": 17,
+  "fields": {
+    "category": 6,
+    "manufacter": 7,
+    "name": "Внешний аккумулятор Baseus Airpow 20000mAh (черный)",
+    "description": "20000 мА·ч (74 Вт·ч), выходы: 2 x 5V/9V/12V (3000 мА), быстрая зарядка",
+    "photo": "products/2026/02/26/piypjip9p8xqn4ipsjlinndvlb48xhmc.webp",
+    "price": "59.00",
+    "amount": 7
+  }
+},
+{
+  "model": "main.product",
+  "pk": 18,
+  "fields": {
+    "category": 6,
+    "manufacter": 6,
+    "name": "Внешний аккумулятор Xiaomi Power Bank PB2020MI 20000mAh (белый, международная версия)",
+    "description": "20000 мА·ч (74 Вт·ч), выходы: 3 x 5V/9V/10V/12V (3000 мА), быстрая зарядка",
+    "photo": "products/2026/02/26/4e02806mq23ki8ycy2gj0i6d4bx6sjiv.webp",
+    "price": "79.00",
+    "amount": 15
+  }
+},
+{
+  "model": "main.product",
+  "pk": 19,
+  "fields": {
+    "category": 7,
+    "manufacter": 9,
+    "name": "Клавиатура MCHOSE G98 Pro Black (TTC Flame Orange)",
+    "description": "игровая для ПК, механическая, TTC Flame Orange, ход линейные, пластик, интерфейс подключения - USB-A/радио (USB-A)/Bluetooth, подсветка, кириллица: нет, цвет черный/серый/темно-серый",
+    "photo": "products/2026/02/26/o0l17jh8sr6nipo4hvong42hgzcgmqyp.webp",
+    "price": "299.00",
+    "amount": 4
+  }
+},
+{
+  "model": "main.product",
+  "pk": 20,
+  "fields": {
+    "category": 7,
+    "manufacter": 9,
+    "name": "Клавиатура MCHOSE G87 Black Pink (TTC Speed Gold Switch V2)",
+    "description": "игровая для ПК, механическая, TTC Speed Gold V2, ход линейные, пластик, интерфейс подключения - USB-A/радио (USB-A)/Bluetooth, подсветка, кириллица: нет, цвет черный/бордовый/розовый",
+    "photo": "products/2026/02/26/jxrzf7iqmzwr86kcxa76ade2j35id44c.webp",
+    "price": "259.00",
+    "amount": 5
+  }
+},
+{
+  "model": "main.product",
+  "pk": 21,
+  "fields": {
+    "category": 7,
+    "manufacter": 10,
+    "name": "Клавиатура беспроводная Bluetooth Royal Kludge RK-S98 RK Brown механическая с подсветкой игровая бело-голубая",
+    "description": "Клавиатура беспроводная Bluetooth Royal Kludge RK-S98 RK Brown механическая с подсветкой игровая бело-голубая",
+    "photo": "products/2026/02/26/lu325zwzc2j7ahmgnvph7mw99eid2axi.webp",
+    "price": "349.00",
+    "amount": 2
+  }
+},
+{
+  "model": "main.product",
+  "pk": 22,
+  "fields": {
+    "category": 8,
+    "manufacter": 11,
+    "name": "Чехол Pitaka Ultra-Slim (PitaTap) для Apple iPhone 16 Pro Max (черный/серый)",
+    "description": "накладной, арамидное волокно, цвета: черный",
+    "photo": "products/2026/02/26/sk709tctl956ikfuxw4r1adry28ws8lb.webp",
+    "price": "180.00",
+    "amount": 11
+  }
+},
+{
+  "model": "main.product",
+  "pk": 23,
+  "fields": {
+    "category": 8,
+    "manufacter": 11,
+    "name": "Чехол Pitaka Ultra-Slim (PitaTap) для Apple iPhone 16 Pro (черный/серый)",
+    "description": "накладной, арамидное волокно, цвета: черный",
+    "photo": "products/2026/02/26/xlxjrl5d3pwbb2hz5omphay68sp9a88h.webp",
+    "price": "250.00",
+    "amount": 9
+  }
+},
+{
+  "model": "main.product",
+  "pk": 24,
+  "fields": {
+    "category": 8,
+    "manufacter": 11,
+    "name": "Чехол для телефона Pitaka Ultra-Slim для iPhone 17 Pro (600D Black/Grey Twill)",
+    "description": "Чехол для телефона Pitaka Ultra-Slim для iPhone 17 Pro (600D Black/Grey Twill)",
+    "photo": "products/2026/02/26/uujl1ywodig8hqtzb9qtmsqhrw6b5zxt.webp",
+    "price": "300.00",
+    "amount": 7
+  }
+},
+{
+  "model": "main.product",
+  "pk": 25,
+  "fields": {
+    "category": 9,
+    "manufacter": 7,
+    "name": "Переходник Type-C - USB 3.1 (папа - мама) хост OTG Baseus Ingenuity Series Mini черный",
+    "description": "Переходник Type-C - USB 3.1 (папа - мама) хост OTG Baseus Ingenuity Series Mini черный",
+    "photo": "products/2026/04/11/Без_имени.png",
+    "price": "20.00",
+    "amount": 2
+  }
+},
+{
+  "model": "main.product",
+  "pk": 26,
+  "fields": {
+    "category": 9,
+    "manufacter": 8,
+    "name": "Переходник Type-C - Ethernet RJ45 с кабелем Ugreen 30287 черный",
+    "description": "Переходник Type-C - Ethernet RJ45 с кабелем Ugreen 30287 черный",
+    "photo": "products/2026/02/26/9e0vi9a61ke3f2m5lec2givz9sz91liy.webp",
+    "price": "25.00",
+    "amount": 4
+  }
+},
+{
+  "model": "main.product",
+  "pk": 27,
+  "fields": {
+    "category": 9,
+    "manufacter": 8,
+    "name": "Переходник USB B - Type-C (папа - мама) Ugreen US382 серый",
+    "description": "Переходник USB B - Type-C (папа - мама) Ugreen US382 серый",
+    "photo": "products/2026/02/26/hnou4ohd2u3aefw8pmbljq8bkg0a7l8u.webp",
+    "price": "15.00",
+    "amount": 5
+  }
+},
+{
+  "model": "main.product",
+  "pk": 28,
+  "fields": {
+    "category": 10,
+    "manufacter": 2,
+    "name": "Наушники Huawei Choice VZ Headphones Lite (зеленый)",
+    "description": "Наушники Huawei Choice VZ Headphones Lite (зеленый)",
+    "photo": "products/2026/02/26/7erwg865ac2ihw1eg842c1aq54jdsi89.webp",
+    "price": "99.00",
+    "amount": 14
+  }
+},
+{
+  "model": "main.product",
+  "pk": 29,
+  "fields": {
+    "category": 10,
+    "manufacter": 1,
+    "name": "Наушники беспроводные Apple AirPods Max полноразмерные с микрофоном и активным шумоподавлением серебристые",
+    "description": "Наушники беспроводные Apple AirPods Max полноразмерные с микрофоном и активным шумоподавлением серебристые",
+    "photo": "products/2026/02/26/8j3qu41to6n16yciezdzerxtcqpiw4nv.webp",
+    "price": "1500.00",
+    "amount": 0
+  }
+},
+{
+  "model": "main.product",
+  "pk": 30,
+  "fields": {
+    "category": 10,
+    "manufacter": 1,
+    "name": "Наушники Apple AirPods Pro 3",
+    "description": "Внутриканальная конструкция с силиконовыми амбушюрами обеспечивает плотную посадку. Система активного шумоподавления эффективно снижает фоновый шум, а режим прозрачности позволяет слышать окружающие звуки, не снимая наушники. Подключение по Bluetooth 5.3 обеспечивает стабильную связь и минимальные задержки. Встроенные микрофоны с шумоподавлением чётко передают голос. На одном заряде работают до 8 часов, а с кейсом — до 24 часов. Быстрая зарядка даёт около 1 часа всего за 5 минут, есть поддержка беспроводной зарядки Qi2. Наушники защищены от пыли и влаги по стандарту IP57, поэтому подойдут для активных тренировок.",
+    "photo": "products/2026/02/26/rq218l2bjhdivvkzzd28s9d4ls89q66l.webp",
+    "price": "999.00",
+    "amount": 15
+  }
+},
+{
+  "model": "main.product",
+  "pk": 31,
+  "fields": {
+    "category": 1,
+    "manufacter": 3,
+    "name": "Телефон Samsung Galaxy A36 SM-A366B 8GB/256GB (фиолетовый)",
+    "description": "смартфон, Android, экран 6.7\" AMOLED (1080x2340) 120 Гц, Qualcomm Snapdragon 6 Gen 3, ОЗУ 8 ГБ, память 256 ГБ, камера 50 Мп, аккумулятор 5000 мАч, 2 SIM (nano-SIM/eSIM), моноблок, влагозащита IP67",
+    "photo": "products/2026/02/26/5bv7qeiwa4uigq3o8cc1f9b4uedc5drt.webp",
+    "price": "1099.00",
+    "amount": 5
+  }
+},
+{
+  "model": "main.product",
+  "pk": 32,
+  "fields": {
+    "category": 1,
+    "manufacter": 3,
+    "name": "Смартфон Samsung Galaxy S25 Ultra SM-S938B 12GB/256GB (серебряный титан)",
+    "description": "Android, экран 6.9\" AMOLED (1440x3120) 120 Гц, Qualcomm Snapdragon 8 Elite, ОЗУ 12 ГБ, память 256 ГБ, камера 200 Мп, аккумулятор 5000 мАч, 2 SIM (nano-SIM/eSIM), влагозащита IP68",
+    "photo": "products/2026/02/26/ti7t3zn2h0wrc6s69ipvhh1l74d33d9h.webp",
+    "price": "4199.00",
+    "amount": 9
+  }
+},
+{
+  "model": "main.product",
+  "pk": 33,
+  "fields": {
+    "category": 1,
+    "manufacter": 1,
+    "name": "Смартфон Apple iPhone 17 Pro Max 512Gb серебристый",
+    "description": "Смартфон Apple iPhone 17 Pro Max 512Gb серебристый",
+    "photo": "products/2026/02/26/znp45khw8kwmy4396v7qns51sxlzto2x.webp",
+    "price": "4800.00",
+    "amount": 2
+  }
+},
+{
+  "model": "main.product",
+  "pk": 34,
+  "fields": {
+    "category": 1,
+    "manufacter": 1,
+    "name": "Смартфон Apple iPhone 16 Pro Dual SIM 128GB (природный титан)",
+    "description": "Продвинутая версия смартфона Apple 2024 года. Прочный титановый корпус с защитой IP68. Высококлассный дисплей Super Retina XDR диагональю 6,3”. Феноменальная производительность благодаря процессору A18 Pro. До 27 часов проигрывания видео. Премиальная система камер с 3 объективами по 48 Мп. Съемка видео Dolby Vision с разрешением до 4К при 120 к/с. Большой объем встроенной памяти. Многофункциональная кнопка Camera Control позволяет работать с камерой еще проще и эффективнее. Еще больше возможностей для работы и развлечений с встроенным ИИ.",
+    "photo": "products/2026/02/26/k759ojxjpi6tlqvrd2t84oitg82tv8k9.webp",
+    "price": "3599.00",
+    "amount": 14
+  }
+}
+]
